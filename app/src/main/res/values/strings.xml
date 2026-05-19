@@ -1,3 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">Circlo</string>
+    <string name="login">Log In</string>
+    <string name="signup">Sign Up</string>
+    <string name="beranda">Beranda</string>
+    <string name="cari">Cari</string>
+    <string name="posting">Post</string>
+    <string name="chat">Chat</string>
+    <string name="profil">Profil</string>
 </resources>
