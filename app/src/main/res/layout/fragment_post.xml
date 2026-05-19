@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/circlo_white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Header -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Posting Barang"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/circlo_black" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="Bagikan barang yang sudah tidak terpakai"
+            android:textSize="13sp"
+            android:textColor="@color/circlo_gray" />
+
+        <!-- Section Foto Barang -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Foto Barang"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="@color/circlo_black" />
+
+        <!-- Tambah Foto -->
+        <LinearLayout
+            android:id="@+id/ll_tambah_foto"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="8dp"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:background="@drawable/bg_card_white"
+            android:elevation="2dp">
+
+            <ImageView
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@drawable/ic_camera"
+                android:contentDescription="Tambah Foto" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="Tambah Foto"
+                android:textSize="11sp"
+                android:textColor="@color/circlo_gray" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="Maksimal 5 foto. Foto pertama akan menjadi foto utama."
+            android:textSize="11sp"
+            android:textColor="@color/circlo_gray" />
+
+        <!-- Nama Barang -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Nama Barang *"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="@color/circlo_black" />
+
+        <EditText
+            android:id="@+id/et_nama_barang"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:hint="Contoh: Kursi Kayu Vintage"
+            android:textSize="14sp"
+            android:textColorHint="@color/circlo_gray"
+            android:background="@drawable/bg_input_field"
+            android:paddingStart="4dp" />
+
+        <!-- Deskripsi -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Deskripsi *"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="@color/circlo_black" />
+
+        <EditText
+            android:id="@+id/et_deskripsi"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="8dp"
+            android:hint="Ceritakan kondisi barang, alasan memberikan, dil..."
+            android:textSize="13sp"
+            android:textColorHint="@color/circlo_gray"
+            android:gravity="top|start"
+            android:background="@drawable/bg_input_field"
+            android:paddingStart="4dp"
+            android:inputType="textMultiLine" />
+
+        <!-- Kategori -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Kategori *"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="@color/circlo_black" />
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:columnCount="2"
+            android:rowCount="3">
+
+            <Button android:id="@+id/btn_furniture"
+                android:layout_width="0dp"
+                android:layout_columnWeight="1"
+                android:layout_height="40dp"
+                android:layout_margin="4dp"
+                android:text="Furniture"
+                android:textSize="13sp"
+                android:background="@drawable/bg_chip_unselected"
+                android:textColor="@color/circlo_black"
+                android:stateListAnimator="@null" />
+
+            <Button android:id="@+id/btn_elektronik"
+                android:layout_width="0dp"
+                android:layout_columnWeight="1"
+                android:layout_height="40dp"
+                android:layout_margin="4dp"
+                android:text="Elektronik"
+                android:textSize="13sp"
+                android:background="@drawable/bg_chip_unselected"
+                android:textColor="@color/circlo_black"
+                android:stateListAnimator="@null" />
+
+            <Button android:id="@+id/btn_pakaian"
+                android:layout_width="0dp"
+                android:layout_columnWeight="1"
+                android:layout_height="40dp"
+                android:layout_margin="4dp"
+                android:text="Pakaian"
+                android:textSize="13sp"
+                android:background="@drawable/bg_chip_unselected"
+                android:textColor="@color/circlo_black"
+                android:stateListAnimator="@null" />
+
+            <Button android:id="@+id/btn_mainan"
+                android:layout_width="0dp"
+                android:layout_columnWeight="1"
+                android:layout_height="40dp"
+                android:layout_margin="4dp"
+                android:text="Mainan"
+                android:textSize="13sp"
+                android:background="@drawable/bg_chip_unselected"
+                android:textColor="@color/circlo_black"
+                android:stateListAnimator="@null" />
+
+            <Button android:id="@+id/btn_buku"
+                android:layout_width="0dp"
+                android:layout_columnWeight="1"
+                android:layout_height="40dp"
+                android:layout_margin="4dp"
+                android:text="Buku"
+                android:textSize="13sp"
+                android:background="@drawable/bg_chip_unselected"
+                android:textColor="@color/circlo_black"
+                android:stateListAnimator="@null" />
+
+            <Button android:id="@+id/btn_lainnya"
+                android:layout_width="0dp"
+                android:layout_columnWeight="1"
+                android:layout_height="40dp"
+                android:layout_margin="4dp"
+                android:text="Lainnya"
+                android:textSize="13sp"
+                android:background="@drawable/bg_chip_unselected"
+                android:textColor="@color/circlo_black"
+                android:stateListAnimator="@null" />
+        </GridLayout>
+
+        <!-- Tombol Submit -->
+        <Button
+            android:id="@+id/btn_posting"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="16dp"
+            android:text="Posting Barang"
+            android:textColor="@color/circlo_white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:background="@drawable/bg_button_green"
+            android:stateListAnimator="@null" />
+
+    </LinearLayout>
+</ScrollView>
