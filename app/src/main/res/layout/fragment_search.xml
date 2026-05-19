@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/circlo_white"
+    android:padding="16dp">
+
+    <!-- Header -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cari Barang"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/circlo_black"
+        android:layout_marginBottom="12dp" />
+
+    <!-- Search Bar + Filter -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="44dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toStartOf="@+id/iv_filter"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/bg_search_bar">
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="12dp"
+                android:src="@drawable/ic_search" />
+
+            <EditText
+                android:id="@+id/et_search"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="36dp"
+                android:hint="Cari furniture, elektronik, dil..."
+                android:textSize="13sp"
+                android:textColorHint="@color/circlo_gray"
+                android:background="@null"
+                android:singleLine="true" />
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/iv_filter"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/ic_filter"
+            android:background="@drawable/bg_search_bar"
+            android:padding="10dp"
+            android:contentDescription="Filter" />
+    </RelativeLayout>
+
+    <!-- Label Hasil Pencarian -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hasil Pencarian"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:textColor="@color/circlo_black" />
+
+        <TextView
+            android:id="@+id/tv_jumlah_hasil"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:text="3 barang"
+            android:textSize="13sp"
+            android:textColor="@color/circlo_gray" />
+    </RelativeLayout>
+
+    <!-- RecyclerView Hasil -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_hasil"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>
