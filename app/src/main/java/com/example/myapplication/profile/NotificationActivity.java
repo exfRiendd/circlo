@@ -7,9 +7,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.circlo.R;
-import com.example.circlo.adapters.NotificationAdapter;
-import com.example.circlo.models.NotifItem;
+import com.example.myapplication.R;
+import com.example.myapplication.adapters.NotificationAdapter;
+import com.example.myapplication.models.NotifItem;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -13,10 +13,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.circlo.R;
-import com.example.circlo.adapters.BarangAdapter;
-import com.example.circlo.models.Barang;
-import com.example.circlo.profile.NotificationActivity;
+import com.example.myapplication.R;
+import com.example.myapplication.adapters.BarangAdapter;
+import com.example.myapplication.models.Barang;
+import com.example.myapplication.profile.NotificationActivity;
 import java.util.ArrayList;
 import java.util.List;
 

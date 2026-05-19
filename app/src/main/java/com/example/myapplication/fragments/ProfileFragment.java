@@ -8,11 +8,11 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import com.example.circlo.R;
-import com.example.circlo.profile.AddressActivity;
-import com.example.circlo.profile.MyItemsActivity;
-import com.example.circlo.profile.NotificationActivity;
-import com.example.circlo.profile.SavedItemsActivity;
+import com.example.myapplication.R;
+import com.example.myapplication.profile.AddressActivity;
+import com.example.myapplication.profile.MyItemsActivity;
+import com.example.myapplication.profile.NotificationActivity;
+import com.example.myapplication.profile.SavedItemsActivity;
 
 public class ProfileFragment extends Fragment {
 

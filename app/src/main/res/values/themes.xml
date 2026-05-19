@@ -9,7 +9,6 @@
         <item name="colorPrimary">@color/circlo_green</item>
         <item name="colorPrimaryDark">@color/circlo_green_dark</item>
         <item name="colorAccent">@color/circlo_green</item>
-        <item name="android:fontFamily">@font/inter</item>
     </style>
     
     <style name="Theme.MyApplication" parent="Base.Theme.MyApplication" />

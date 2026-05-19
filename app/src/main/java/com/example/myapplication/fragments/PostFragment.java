@@ -11,7 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import com.example.circlo.R;
+import com.example.myapplication.R;
 
 public class PostFragment extends Fragment {
 

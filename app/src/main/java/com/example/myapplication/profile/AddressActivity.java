@@ -7,7 +7,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.circlo.R;
+import com.example.myapplication.R;
 
 public class AddressActivity extends AppCompatActivity {
 

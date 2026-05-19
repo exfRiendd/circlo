@@ -6,9 +6,9 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.circlo.R;
-import com.example.circlo.adapters.BarangAdapter;
-import com.example.circlo.models.Barang;
+import com.example.myapplication.R;
+import com.example.myapplication.adapters.BarangAdapter;
+import com.example.myapplication.models.Barang;
 import java.util.ArrayList;
 import java.util.List;
 

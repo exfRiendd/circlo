@@ -9,9 +9,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.circlo.R;
-import com.example.circlo.adapters.ChatAdapter;
-import com.example.circlo.models.ChatItem;
+import com.example.myapplication.R;
+import com.example.myapplication.adapters.ChatAdapter;
+import com.example.myapplication.models.ChatItem;
 import java.util.ArrayList;
 import java.util.List;
 
