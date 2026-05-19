@@ -1,4 +1,4 @@
-package com.example.circlo.models;
+package com.example.myapplication.models;
 
 public class NotifItem {
     private String judul;

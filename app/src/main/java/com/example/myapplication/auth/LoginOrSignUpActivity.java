@@ -1,10 +1,10 @@
-package com.example.circlo.auth;
+package com.example.myapplication.auth;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
-import com.example.circlo.R;
+import com.example.myapplication.R;
 
 public class LoginOrSignUpActivity extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package com.example.circlo.adapters;
+package com.example.myapplication.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,8 +8,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.circlo.R;
-import com.example.circlo.models.Barang;
+import com.example.myapplication.R;
+import com.example.myapplication.models.Barang;
 import java.util.List;
 
 public class MyItemAdapter extends RecyclerView.Adapter<MyItemAdapter.ViewHolder> {

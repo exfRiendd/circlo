@@ -1,4 +1,4 @@
-package com.example.circlo.profile;
+package com.example.myapplication.profile;
 
 import android.os.Bundle;
 import android.widget.Button;

@@ -1,14 +1,13 @@
-package com.example.circlo.main;
+package com.example.myapplication;
 
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import com.example.circlo.R;
-import com.example.circlo.fragments.ChatFragment;
-import com.example.circlo.fragments.HomeFragment;
-import com.example.circlo.fragments.PostFragment;
-import com.example.circlo.fragments.ProfileFragment;
-import com.example.circlo.fragments.SearchFragment;
+import com.example.myapplication.fragments.ChatFragment;
+import com.example.myapplication.fragments.HomeFragment;
+import com.example.myapplication.fragments.PostFragment;
+import com.example.myapplication.fragments.ProfileFragment;
+import com.example.myapplication.fragments.SearchFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
