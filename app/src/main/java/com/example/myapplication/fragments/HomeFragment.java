@@ -57,13 +57,25 @@ public class HomeFragment extends Fragment {
         rvBarang.setAdapter(new BarangAdapter(getDummyBarang()));
     }
 
-    private List<Barang> getDummyBarang() {
-        List<Barang> list = new ArrayList<>();
-        list.add(new Barang("Kursi Kayu Vintage", "Furniture", "Jakarta Selatan", "2 jam lalu"));
-        list.add(new Barang("Rak Buku Minimalis", "Furniture", "Jakarta Barat", "1 hari lalu"));
-        list.add(new Barang("TV LED 32 inch", "Elektronik", "Depok", "3 jam lalu"));
-        list.add(new Barang("Baju Batik Pria", "Pakaian", "Bogor", "5 jam lalu"));
-        list.add(new Barang("Mainan Lego Set", "Mainan", "Bekasi", "2 hari lalu"));
-        return list;
-    }
+    private void loadBarangFromApi() {
+    ApiService api = ApiClient.getApiService();
+    api.getBarang().enqueue(new Callback<ApiResponse<List<Barang>>>() {
+        @Override
+        public void onResponse(Call<ApiResponse<List<Barang>>> call,
+                               Response<ApiResponse<List<Barang>>> response) {
+            if (response.isSuccessful() && response.body() != null
+                    && response.body().isSuccess()) {
+                List<Barang> barangList = response.body().getData();
+                rvBarang.setAdapter(new BarangAdapter(barangList));
+            } else {
+                Toast.makeText(getContext(), "Gagal memuat data", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        @Override
+        public void onFailure(Call<ApiResponse<List<Barang>>> call, Throwable t) {
+            Toast.makeText(getContext(), "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    });
+}
 }
