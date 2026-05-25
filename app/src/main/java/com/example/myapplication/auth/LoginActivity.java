@@ -46,16 +46,45 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(v -> {
             String username = etUsername.getText().toString().trim();
             String password = etPassword.getText().toString().trim();
-
+        
             if (username.isEmpty() || password.isEmpty()) {
-                Toast.makeText(this, "Username dan password tidak boleh kosong", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Username dan password wajib diisi", Toast.LENGTH_SHORT).show();
                 return;
             }
-
-            // TODO: Ganti dengan autentikasi nyata (Firebase / API)
-            // Simulasi login berhasil
-            startActivity(new Intent(this, MainActivity.class));
-            finishAffinity();
+        
+            Map<String, String> body = new HashMap<>();
+            body.put("username", username);
+            body.put("password", password);
+        
+            ApiClient.getApiService().login(body).enqueue(new Callback<ApiResponse<User>>() {
+                @Override
+                public void onResponse(Call<ApiResponse<User>> call,
+                                       Response<ApiResponse<User>> response) {
+                    if (response.isSuccessful() && response.body() != null
+                            && response.body().isSuccess()) {
+                        User user = (User) response.body().getUser();
+        
+                        // Simpan sesi user ke SharedPreferences
+                        SharedPreferences.Editor editor = getSharedPreferences("circlo_prefs", MODE_PRIVATE).edit();
+                        editor.putInt("user_id",       user.getId());
+                        editor.putString("username",   user.getUsername());
+                        editor.putString("email",      user.getEmail());
+                        editor.apply();
+        
+                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        finishAffinity();
+                    } else {
+                        Toast.makeText(LoginActivity.this,
+                                "Username atau password salah", Toast.LENGTH_SHORT).show();
+                    }
+                }
+        
+                @Override
+                public void onFailure(Call<ApiResponse<User>> call, Throwable t) {
+                    Toast.makeText(LoginActivity.this,
+                            "Tidak dapat terhubung ke server", Toast.LENGTH_SHORT).show();
+                }
+            });
         });
 
         // Link ke Sign Up
