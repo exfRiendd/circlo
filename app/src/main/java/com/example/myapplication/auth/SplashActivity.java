@@ -16,7 +16,14 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
 
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
-            startActivity(new Intent(this, LoginOrSignUpActivity.class));
+            SharedPreferences prefs = getSharedPreferences("circlo_prefs", MODE_PRIVATE);
+            boolean isLoggedIn = prefs.getInt("user_id", 0) != 0;
+        
+            if (isLoggedIn) {
+                startActivity(new Intent(this, MainActivity.class));
+            } else {
+                startActivity(new Intent(this, LoginOrSignUpActivity.class));
+            }
             finish();
         }, 2000);
     }
