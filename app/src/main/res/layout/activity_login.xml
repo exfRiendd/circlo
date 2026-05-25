@@ -1,127 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center_horizontal"
-    android:padding="32dp"
     android:background="@color/circlo_white">
 
-    <!-- Logo -->
-    <ImageView
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:layout_marginTop="48dp"
-        android:src="@drawable/ic_circlo_logo"
-        android:contentDescription="Logo" />
-
-    <!-- Judul -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="Welcome Back!"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        android:textColor="@color/circlo_black" />
-
-    <!-- Input Username/Email -->
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp">
-
-        <EditText
-            android:id="@+id/et_username"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:hint="Username/Email"
-            android:textSize="14sp"
-            android:background="@drawable/bg_input_field"
-            android:paddingStart="4dp"
-            android:paddingEnd="36dp"
-            android:inputType="textEmailAddress"
-            android:textColor="@color/circlo_black"
-            android:textColorHint="@color/circlo_gray" />
-
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:src="@drawable/ic_person"
-            android:contentDescription="User icon" />
-    </RelativeLayout>
-
-    <!-- Input Password -->
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp">
-
-        <EditText
-            android:id="@+id/et_password"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:hint="Password"
-            android:textSize="14sp"
-            android:background="@drawable/bg_input_field"
-            android:paddingStart="4dp"
-            android:paddingEnd="36dp"
-            android:inputType="textPassword"
-            android:textColor="@color/circlo_black"
-            android:textColorHint="@color/circlo_gray" />
-
-        <ImageView
-            android:id="@+id/iv_toggle_password"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:src="@drawable/ic_visibility"
-            android:contentDescription="Toggle password" />
-    </RelativeLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
-
-    <!-- Tombol Log In -->
-    <Button
-        android:id="@+id/btn_login"
-        android:layout_width="match_parent"
-        android:layout_height="52dp"
-        android:text="Log In"
-        android:textColor="@color/circlo_white"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:background="@drawable/bg_button_black"
-        android:stateListAnimator="@null" />
-
-    <!-- Link Sign Up -->
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:orientation="horizontal">
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:padding="32dp">
+
+        <ImageView
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginTop="48dp"
+            android:src="@drawable/ic_circlo_logo"
+            android:contentDescription="Logo" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Don't have an account? "
-            android:textSize="13sp"
-            android:textColor="@color/circlo_gray" />
+            android:layout_marginTop="24dp"
+            android:text="Welcome Back!"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="@color/circlo_black" />
 
-        <TextView
-            android:id="@+id/tv_signup_link"
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp">
+            <EditText
+                android:id="@+id/et_username"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:hint="Username/Email"
+                android:textSize="14sp"
+                android:background="@drawable/bg_input_field"
+                android:paddingEnd="36dp"
+                android:inputType="textEmailAddress"
+                android:textColorHint="@color/circlo_gray" />
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_person"
+                android:contentDescription="User icon" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp">
+            <EditText
+                android:id="@+id/et_password"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:hint="Password"
+                android:textSize="14sp"
+                android:background="@drawable/bg_input_field"
+                android:paddingEnd="36dp"
+                android:inputType="textPassword"
+                android:textColorHint="@color/circlo_gray" />
+            <ImageView
+                android:id="@+id/iv_toggle_password"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_visibility"
+                android:contentDescription="Toggle password" />
+        </RelativeLayout>
+
+        <!-- Hapus View spacer, langsung tombol dengan marginTop -->
+        <Button
+            android:id="@+id/btn_login"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="32dp"
+            android:text="Log In"
+            android:textColor="@color/circlo_white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:background="@drawable/bg_button_black"
+            android:stateListAnimator="@null" />
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sign Up"
-            android:textSize="13sp"
-            android:textColor="@color/circlo_green"
-            android:textStyle="bold" />
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Don't have an account? "
+                android:textSize="13sp"
+                android:textColor="@color/circlo_gray" />
+            <TextView
+                android:id="@+id/tv_signup_link"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sign Up"
+                android:textSize="13sp"
+                android:textColor="@color/circlo_green"
+                android:textStyle="bold" />
+        </LinearLayout>
+
     </LinearLayout>
-
-</LinearLayout>
+</ScrollView>
