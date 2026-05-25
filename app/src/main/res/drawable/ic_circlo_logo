@@ -1,0 +1,25 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+
+    <!-- Teal circle background -->
+    <path
+        android:fillColor="#3DAA99"
+        android:pathData="M12,1C5.925,1 1,5.925 1,12C1,18.075 5.925,23 12,23C18.075,23 23,18.075 23,12C23,5.925 18.075,1 12,1Z" />
+
+    <!-- Recycle arrows (white) — standard 3-arrow recycling symbol
+         Path manually crafted to match the classic recycling glyph layout at 24x24 grid
+    -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="
+          M12,4 L9,8.5 L10.5,8.5 L8.8,11.5 L10.5,11.5 L10.5,13 L13.5,13 L13.5,11.5
+          L15.2,11.5 L13.5,8.5 L15,8.5 Z
+          M15.5,11.5 L13.8,11.5 L15.5,14.5 L14,14.5 L14,16.5 L18,16.5 L18,14.5
+          L19.5,14.5 Z
+          M8.5,11.5 L4.5,14.5 L6,14.5 L6,16.5 L10,16.5 L10,14.5 L8.5,14.5 Z
+          M10,16.5 L10,18.5 L11,18.5 L12,20 L13,18.5 L14,18.5 L14,16.5 Z
+        " />
+</vector>
