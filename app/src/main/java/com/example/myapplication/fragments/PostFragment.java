@@ -64,27 +64,45 @@ public class PostFragment extends Fragment {
 
         // Submit posting
         btnPosting.setOnClickListener(v -> {
-            String nama = etNamaBarang.getText().toString().trim();
+            String nama      = etNamaBarang.getText().toString().trim();
             String deskripsi = etDeskripsi.getText().toString().trim();
-
-            if (nama.isEmpty()) {
-                Toast.makeText(getContext(), "Nama barang wajib diisi", Toast.LENGTH_SHORT).show();
+        
+            if (nama.isEmpty() || deskripsi.isEmpty() || kategoriDipilih.isEmpty()) {
+                Toast.makeText(getContext(), "Lengkapi semua field", Toast.LENGTH_SHORT).show();
                 return;
             }
-            if (deskripsi.isEmpty()) {
-                Toast.makeText(getContext(), "Deskripsi wajib diisi", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            if (kategoriDipilih.isEmpty()) {
-                Toast.makeText(getContext(), "Pilih kategori terlebih dahulu", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            // TODO: Simpan ke database / API
-            Toast.makeText(getContext(), "Barang berhasil diposting!", Toast.LENGTH_SHORT).show();
-            etNamaBarang.setText("");
-            etDeskripsi.setText("");
-            kategoriDipilih = "";
+        
+            // Ambil user_id dari SharedPreferences (lihat bagian Login)
+            SharedPreferences prefs = requireActivity().getSharedPreferences("circlo_prefs", Context.MODE_PRIVATE);
+            int userId = prefs.getInt("user_id", 0);
+        
+            Map<String, Object> body = new HashMap<>();
+            body.put("user_id",   userId);
+            body.put("nama",      nama);
+            body.put("deskripsi", deskripsi);
+            body.put("kategori",  kategoriDipilih);
+            body.put("lokasi",    "Jakarta"); // Bisa diambil dari input atau GPS
+        
+            ApiClient.getApiService().addBarang(body).enqueue(new Callback<ApiResponse<Barang>>() {
+                @Override
+                public void onResponse(Call<ApiResponse<Barang>> call,
+                                       Response<ApiResponse<Barang>> response) {
+                    if (response.isSuccessful() && response.body() != null
+                            && response.body().isSuccess()) {
+                        Toast.makeText(getContext(), "Barang berhasil diposting!", Toast.LENGTH_SHORT).show();
+                        etNamaBarang.setText("");
+                        etDeskripsi.setText("");
+                        kategoriDipilih = "";
+                    } else {
+                        Toast.makeText(getContext(), "Gagal posting barang", Toast.LENGTH_SHORT).show();
+                    }
+                }
+        
+                @Override
+                public void onFailure(Call<ApiResponse<Barang>> call, Throwable t) {
+                    Toast.makeText(getContext(), "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
         });
     }
 }
