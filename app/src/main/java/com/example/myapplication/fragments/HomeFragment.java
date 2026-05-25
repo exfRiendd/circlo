@@ -54,7 +54,7 @@ public class HomeFragment extends Fragment {
         // RecyclerView barang
         RecyclerView rvBarang = view.findViewById(R.id.rv_barang);
         rvBarang.setLayoutManager(new LinearLayoutManager(getContext()));
-        rvBarang.setAdapter(new BarangAdapter(getDummyBarang()));
+        loadBarangFromApi();
     }
 
     private void loadBarangFromApi() {
