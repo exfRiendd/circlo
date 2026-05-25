@@ -96,7 +96,7 @@
             android:layout_gravity="top"
             android:src="@drawable/ic_favorite"
             android:contentDescription="Hapus dari simpanan"
-            android:tint="@color/circlo_green" />
+            app:tint="@color/circlo_green" />
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>
