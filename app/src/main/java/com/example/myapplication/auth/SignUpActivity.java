@@ -11,7 +11,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.myapplication.R;
-import com.example.myapplication.MainActivity;
+import com.example.myapplication.models.ApiResponse;
+import com.example.myapplication.models.User;
+import com.example.myapplication.network.ApiClient;
+import java.util.HashMap;
+import java.util.Map;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -82,10 +89,33 @@ public class SignUpActivity extends AppCompatActivity {
                 return;
             }
 
-            // TODO: Ganti dengan registrasi nyata (Firebase / API)
-            Toast.makeText(this, "Akun berhasil dibuat!", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(this, MainActivity.class));
-            finishAffinity();
+            Map<String, String> body = new HashMap<>();
+            body.put("username", username);
+            body.put("email", email);
+            body.put("password", password);
+
+            ApiClient.getApiService().register(body).enqueue(new Callback<ApiResponse<User>>() {
+                @Override
+                public void onResponse(Call<ApiResponse<User>> call,
+                                       Response<ApiResponse<User>> response) {
+                    if (response.isSuccessful() && response.body() != null
+                            && response.body().isSuccess()) {
+                        Toast.makeText(SignUpActivity.this,
+                                "Akun berhasil dibuat!", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(SignUpActivity.this, LoginActivity.class));
+                        finish();
+                    } else {
+                        Toast.makeText(SignUpActivity.this,
+                                "Gagal membuat akun", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ApiResponse<User>> call, Throwable t) {
+                    Toast.makeText(SignUpActivity.this,
+                            "Tidak dapat terhubung ke server", Toast.LENGTH_SHORT).show();
+                }
+            });
         });
 
         // Link ke Login

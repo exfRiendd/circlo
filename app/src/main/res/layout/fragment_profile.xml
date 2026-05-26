@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/circlo_white">
@@ -56,31 +57,59 @@
                     android:layout_marginStart="12dp"
                     android:orientation="vertical">
 
+                    <!-- Nama dari login -->
                     <TextView
                         android:id="@+id/tv_nama"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Alit Sutalit Terbelit belit"
+                        android:text="Loading..."
                         android:textSize="15sp"
                         android:textStyle="bold"
                         android:textColor="@color/circlo_white" />
 
-                    <TextView
-                        android:id="@+id/tv_lokasi"
+                    <!-- Lokasi bisa diklik -->
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="📍 Jakarta, Indonesia"
-                        android:textSize="12sp"
-                        android:textColor="@color/circlo_white" />
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginTop="4dp">
+
+                        <ImageView
+                            android:layout_width="12dp"
+                            android:layout_height="12dp"
+                            android:src="@drawable/ic_location"
+                            android:contentDescription="Lokasi" />
+
+                        <TextView
+                            android:id="@+id/tv_lokasi"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp"
+                            android:text="Tap untuk tambah lokasi"
+                            android:textSize="12sp"
+                            android:textColor="@color/circlo_white"
+                            android:background="?attr/selectableItemBackground" />
+                    </LinearLayout>
 
                     <TextView
                         android:id="@+id/tv_joined"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Bergabung Januari 2025"
+                        android:layout_marginTop="4dp"
+                        android:text="Bergabung..."
                         android:textSize="11sp"
                         android:textColor="@color/circlo_white" />
                 </LinearLayout>
+
+                <!-- Tombol Edit Profil -->
+                <ImageView
+                    android:id="@+id/iv_edit_profil"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_edit"
+                    android:contentDescription="Edit Profil" />
+
             </LinearLayout>
 
             <!-- Statistik -->
@@ -92,31 +121,76 @@
                 android:layout_marginTop="16dp"
                 android:orientation="horizontal">
 
-                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
-                    android:layout_weight="1" android:orientation="vertical" android:gravity="center">
-                    <TextView android:id="@+id/tv_diposting" android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" android:text="12"
-                        android:textSize="18sp" android:textStyle="bold" android:textColor="@color/circlo_white" />
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="Diposting" android:textSize="11sp" android:textColor="@color/circlo_white" />
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/tv_diposting"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/circlo_white" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Diposting"
+                        android:textSize="11sp"
+                        android:textColor="@color/circlo_white" />
                 </LinearLayout>
 
-                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
-                    android:layout_weight="1" android:orientation="vertical" android:gravity="center">
-                    <TextView android:id="@+id/tv_diterima" android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" android:text="8"
-                        android:textSize="18sp" android:textStyle="bold" android:textColor="@color/circlo_white" />
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="Diterima" android:textSize="11sp" android:textColor="@color/circlo_white" />
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/tv_diterima"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/circlo_white" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Diterima"
+                        android:textSize="11sp"
+                        android:textColor="@color/circlo_white" />
                 </LinearLayout>
 
-                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
-                    android:layout_weight="1" android:orientation="vertical" android:gravity="center">
-                    <TextView android:id="@+id/tv_dibagikan" android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" android:text="15"
-                        android:textSize="18sp" android:textStyle="bold" android:textColor="@color/circlo_white" />
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="Dibagikan" android:textSize="11sp" android:textColor="@color/circlo_white" />
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/tv_dibagikan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/circlo_white" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Dibagikan"
+                        android:textSize="11sp"
+                        android:textColor="@color/circlo_white" />
                 </LinearLayout>
             </LinearLayout>
         </RelativeLayout>
@@ -143,7 +217,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="Kamu telah membantu mengurangi sampah dengan berbagi 15 barang!"
+                android:text="Mulai bagikan barangmu dan bantu kurangi sampah!"
                 android:textSize="12sp"
                 android:textColor="@color/circlo_white" />
 
@@ -153,15 +227,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="8dp"
                 android:layout_marginTop="10dp"
-                android:progress="60"
+                android:progress="0"
                 android:progressTint="@color/circlo_white"
                 android:progressBackgroundTint="#80FFFFFF" />
 
             <TextView
+                android:id="@+id/tv_eco_target"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
-                android:text="5 barang lagi untuk mencapai level Eco Hero!"
+                android:text="Posting barang pertamamu sekarang!"
                 android:textSize="11sp"
                 android:textColor="@color/circlo_white" />
         </LinearLayout>
@@ -179,18 +254,34 @@
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
                 android:background="?attr/selectableItemBackground">
-                <ImageView android:layout_width="20dp" android:layout_height="20dp"
-                    android:layout_centerVertical="true" android:src="@drawable/ic_inventory"
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_inventory"
                     android:contentDescription="Barang Saya" />
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:layout_centerVertical="true" android:layout_marginStart="32dp"
-                    android:text="Barang Saya" android:textSize="14sp" android:textColor="@color/circlo_black" />
-                <ImageView android:layout_width="16dp" android:layout_height="16dp"
-                    android:layout_alignParentEnd="true" android:layout_centerVertical="true"
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="32dp"
+                    android:text="Barang Saya"
+                    android:textSize="14sp"
+                    android:textColor="@color/circlo_black" />
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
                     android:src="@drawable/ic_chevron_right" />
             </RelativeLayout>
 
-            <View android:layout_width="match_parent" android:layout_height="1dp"
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
                 android:background="@color/circlo_border" />
 
             <!-- Barang Tersimpan -->
@@ -199,18 +290,34 @@
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
                 android:background="?attr/selectableItemBackground">
-                <ImageView android:layout_width="20dp" android:layout_height="20dp"
-                    android:layout_centerVertical="true" android:src="@drawable/ic_favorite"
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_favorite"
                     android:contentDescription="Tersimpan" />
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:layout_centerVertical="true" android:layout_marginStart="32dp"
-                    android:text="Barang Tersimpan" android:textSize="14sp" android:textColor="@color/circlo_black" />
-                <ImageView android:layout_width="16dp" android:layout_height="16dp"
-                    android:layout_alignParentEnd="true" android:layout_centerVertical="true"
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="32dp"
+                    android:text="Barang Tersimpan"
+                    android:textSize="14sp"
+                    android:textColor="@color/circlo_black" />
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
                     android:src="@drawable/ic_chevron_right" />
             </RelativeLayout>
 
-            <View android:layout_width="match_parent" android:layout_height="1dp"
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
                 android:background="@color/circlo_border" />
 
             <!-- Alamat Pengambilan -->
@@ -219,18 +326,34 @@
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
                 android:background="?attr/selectableItemBackground">
-                <ImageView android:layout_width="20dp" android:layout_height="20dp"
-                    android:layout_centerVertical="true" android:src="@drawable/ic_location"
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_location"
                     android:contentDescription="Alamat" />
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:layout_centerVertical="true" android:layout_marginStart="32dp"
-                    android:text="Alamat Pengambilan" android:textSize="14sp" android:textColor="@color/circlo_black" />
-                <ImageView android:layout_width="16dp" android:layout_height="16dp"
-                    android:layout_alignParentEnd="true" android:layout_centerVertical="true"
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="32dp"
+                    android:text="Alamat Pengambilan"
+                    android:textSize="14sp"
+                    android:textColor="@color/circlo_black" />
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
                     android:src="@drawable/ic_chevron_right" />
             </RelativeLayout>
 
-            <View android:layout_width="match_parent" android:layout_height="1dp"
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
                 android:background="@color/circlo_border" />
 
             <!-- Notifikasi -->
@@ -239,15 +362,67 @@
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
                 android:background="?attr/selectableItemBackground">
-                <ImageView android:layout_width="20dp" android:layout_height="20dp"
-                    android:layout_centerVertical="true" android:src="@drawable/ic_notifications"
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_notifications"
                     android:contentDescription="Notifikasi" />
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:layout_centerVertical="true" android:layout_marginStart="32dp"
-                    android:text="Notifikasi" android:textSize="14sp" android:textColor="@color/circlo_black" />
-                <ImageView android:layout_width="16dp" android:layout_height="16dp"
-                    android:layout_alignParentEnd="true" android:layout_centerVertical="true"
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="32dp"
+                    android:text="Notifikasi"
+                    android:textSize="14sp"
+                    android:textColor="@color/circlo_black" />
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
                     android:src="@drawable/ic_chevron_right" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/circlo_border" />
+
+            <!-- Logout -->
+            <RelativeLayout
+                android:id="@+id/menu_logout"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:background="?attr/selectableItemBackground">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_close"
+                    android:contentDescription="Logout"
+                    app:tint="@color/circlo_red" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="32dp"
+                    android:text="Logout"
+                    android:textSize="14sp"
+                    android:textColor="@color/circlo_red" />
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_chevron_right"
+                    app:tint="@color/circlo_red" />
             </RelativeLayout>
 
         </LinearLayout>

@@ -18,6 +18,11 @@ public class User {
     @SerializedName("foto_profil")
     private String fotoProfil;
 
+    @SerializedName("created_at")
+    private String createdAt;
+
+    public String getCreatedAt() { return createdAt; }
+
     public int getId()           { return id; }
     public String getUsername()  { return username; }
     public String getEmail()     { return email; }

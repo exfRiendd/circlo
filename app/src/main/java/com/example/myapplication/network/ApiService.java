@@ -31,4 +31,10 @@ public interface ApiService {
 
     @POST("add_barang.php")
     Call<ApiResponse<Barang>> addBarang(@Body Map<String, Object> body);
+
+    @GET("get_profile.php")
+    Call<ApiResponse<User>> getProfile(@Query("user_id") int userId);
+
+    @POST("update_profile.php")
+    Call<ApiResponse<User>> updateProfile(@Body Map<String, Object> body);
 }
