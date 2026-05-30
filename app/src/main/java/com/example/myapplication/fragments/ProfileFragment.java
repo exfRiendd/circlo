@@ -15,7 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import com.example.myapplication.R;
-import com.example.myapplication.auth.LoginOrSignUpActivity;
+import com.example.myapplication.auth.SignUpActivity;
 import com.example.myapplication.models.ApiResponse;
 import com.example.myapplication.models.User;
 import com.example.myapplication.network.ApiClient;
@@ -85,7 +85,7 @@ public class ProfileFragment extends Fragment {
                     .setPositiveButton("Logout", (dialog, which) -> {
                         requireActivity().getSharedPreferences("circlo_prefs", Context.MODE_PRIVATE)
                                 .edit().clear().apply();
-                        startActivity(new Intent(getActivity(), LoginOrSignUpActivity.class));
+                        startActivity(new Intent(getActivity(), SignUpActivity.class));
                         requireActivity().finishAffinity();
                     })
                     .setNegativeButton("Batal", null)
