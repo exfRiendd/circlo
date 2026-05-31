@@ -12,3 +12,10 @@ data class ChatRoom(
     @SerialName("last_message") val lastMessage: String = "",
     @SerialName("last_message_at") val lastMessageAt: String = ""
 )
+
+// Model terpisah untuk display di adapter — tidak di-serialize dari DB
+data class ChatRoomDisplay(
+    val room: ChatRoom,
+    val otherUsername: String,
+    val namaBarang: String
+)

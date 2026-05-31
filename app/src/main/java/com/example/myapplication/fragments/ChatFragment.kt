@@ -13,11 +13,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.adapters.ChatRoomAdapter
 import com.example.myapplication.chat.ChatRoomActivity
+import com.example.myapplication.models.BarangItem
 import com.example.myapplication.models.ChatRoom
+import com.example.myapplication.models.ChatRoomDisplay
+import com.example.myapplication.models.Profile
 import com.example.myapplication.network.SupabaseClientProvider
 import io.github.jan.supabase.auth.auth
 import io.github.jan.supabase.postgrest.postgrest
-import io.github.jan.supabase.postgrest.query.Order
 import kotlinx.coroutines.launch
 
 class ChatFragment : Fragment() {
@@ -38,6 +40,8 @@ class ChatFragment : Fragment() {
 
         lifecycleScope.launch {
             try {
+                android.util.Log.d("ChatFragment", "Start loading, userId: $userId")
+
                 val rooms = SupabaseClientProvider.client
                     .postgrest["chat_rooms"]
                     .select()
@@ -45,14 +49,43 @@ class ChatFragment : Fragment() {
                     .filter { it.donorId == userId || it.requesterId == userId }
                     .sortedByDescending { it.lastMessageAt }
 
-                rv.adapter = ChatRoomAdapter(rooms) { room ->
+                android.util.Log.d("ChatFragment", "Rooms: ${rooms.size}")
+
+                val profiles = SupabaseClientProvider.client
+                    .postgrest["profiles"]
+                    .select()
+                    .decodeList<Profile>()
+                    .associateBy { it.id }
+
+                android.util.Log.d("ChatFragment", "Profiles: ${profiles.size}")
+
+                val allBarang = SupabaseClientProvider.client
+                    .postgrest["barang"]
+                    .select()
+                    .decodeList<BarangItem>()
+                    .associateBy { it.id }
+
+                android.util.Log.d("ChatFragment", "Barang: ${allBarang.size}")
+
+                val roomsDisplay = rooms.map { room ->
+                    val otherUserId = if (room.donorId == userId) room.requesterId else room.donorId
+                    val otherUsername = profiles[otherUserId]?.username ?: "Pengguna"
+                    val namaBarang = allBarang[room.barangId]?.nama ?: ""
+                    ChatRoomDisplay(room, otherUsername, namaBarang)
+                }
+
+                android.util.Log.d("ChatFragment", "RoomsDisplay: ${roomsDisplay.size}")
+
+                rv.adapter = ChatRoomAdapter(roomsDisplay) { item ->
                     val intent = Intent(requireContext(), ChatRoomActivity::class.java)
-                    intent.putExtra("room_id", room.id)
-                    intent.putExtra("other_username", room.donorId)
+                    intent.putExtra("room_id", item.room.id)
+                    intent.putExtra("other_username", item.otherUsername)
                     startActivity(intent)
                 }
+
             } catch (e: Exception) {
-                Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+                android.util.Log.e("ChatFragment", "Error: ${e.message}", e)
+                Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_LONG).show()
             }
         }
     }

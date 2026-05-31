@@ -6,11 +6,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
-import com.example.myapplication.models.ChatRoom
+import com.example.myapplication.models.ChatRoomDisplay
 
 class ChatRoomAdapter(
-    private val rooms: List<ChatRoom>,
-    private val onClick: (ChatRoom) -> Unit
+    private val rooms: List<ChatRoomDisplay>,
+    private val onClick: (ChatRoomDisplay) -> Unit
 ) : RecyclerView.Adapter<ChatRoomAdapter.VH>() {
 
     inner class VH(view: View) : RecyclerView.ViewHolder(view) {
@@ -24,13 +24,13 @@ class ChatRoomAdapter(
         VH(LayoutInflater.from(parent.context).inflate(R.layout.item_chat_row, parent, false))
 
     override fun onBindViewHolder(holder: VH, position: Int) {
-        val room = rooms[position]
-        holder.tvNama.text = room.donorId.take(8)   // sementara tampil ID
-        holder.tvItemName.text = room.barangId.take(8)
-        holder.tvLastMessage.text = room.lastMessage
-        holder.tvWaktu.text = if (room.lastMessageAt.length >= 10)
-            room.lastMessageAt.take(10) else room.lastMessageAt
-        holder.itemView.setOnClickListener { onClick(room) }
+        val item = rooms[position]
+        holder.tvNama.text = item.otherUsername
+        holder.tvItemName.text = item.namaBarang
+        holder.tvLastMessage.text = item.room.lastMessage
+        holder.tvWaktu.text = if (item.room.lastMessageAt.length >= 16)
+            item.room.lastMessageAt.substring(11, 16) else item.room.lastMessageAt
+        holder.itemView.setOnClickListener { onClick(item) }
     }
 
     override fun getItemCount() = rooms.size
