@@ -43,7 +43,7 @@ dependencies {
     implementation(libs.supabase.auth)
     implementation(libs.supabase.realtime)
     implementation(libs.supabase.storage)
-    implementation(libs.ktor.android)
+    implementation("io.ktor:ktor-client-okhttp:3.0.3")
     implementation(libs.ktor.cio)
 
     // Coroutines
