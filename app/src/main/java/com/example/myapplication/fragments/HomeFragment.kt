@@ -14,10 +14,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.adapters.BarangAdapter
+import com.example.myapplication.chat.ChatRoomActivity
 import com.example.myapplication.models.Barang
 import com.example.myapplication.models.BarangItem
+import com.example.myapplication.models.ChatRoom
 import com.example.myapplication.network.SupabaseClientProvider
 import com.example.myapplication.profile.NotificationActivity
+import io.github.jan.supabase.auth.auth
 import io.github.jan.supabase.postgrest.postgrest
 import kotlinx.coroutines.launch
 
@@ -57,12 +60,63 @@ class HomeFragment : Fragment() {
                     .select()
                     .decodeList<BarangItem>()
 
-                // Konversi BarangItem ke Barang agar kompatibel dengan BarangAdapter
                 val barangList = result.map {
-                    Barang(it.nama, it.kategori, it.lokasi, it.createdAt)
+                    val b = Barang(it.nama, it.kategori, it.lokasi, it.createdAt)
+                    b.setId(it.id)
+                    b.setUserId(it.userId)
+                    b
                 }
 
-                rv.adapter = BarangAdapter(barangList)
+                rv.adapter = BarangAdapter(barangList) { barang ->
+                    buatChatRoom(barang)
+                }
+
+            } catch (e: Exception) {
+                Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun buatChatRoom(barang: Barang) {
+        val myUserId = SupabaseClientProvider.client
+            .auth.currentSessionOrNull()?.user?.id ?: return
+
+        if (myUserId == barang.getUserId()) {
+            Toast.makeText(context, "Ini barang kamu sendiri", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        lifecycleScope.launch {
+            try {
+                // Cek apakah room sudah ada
+                val existing = SupabaseClientProvider.client
+                    .postgrest["chat_rooms"]
+                    .select()
+                    .decodeList<ChatRoom>()
+                    .firstOrNull {
+                        it.barangId == barang.getId() && it.requesterId == myUserId
+                    }
+
+                val roomId = if (existing != null) {
+                    existing.id
+                } else {
+                    // Buat room baru
+                    val newRoom = ChatRoom(
+                        barangId = barang.getId() ?: "",
+                        donorId = barang.getUserId() ?: "",
+                        requesterId = myUserId
+                    )
+                    val created = SupabaseClientProvider.client
+                        .postgrest["chat_rooms"]
+                        .insert(newRoom)
+                        .decodeSingle<ChatRoom>()
+                    created.id
+                }
+
+                val intent = Intent(requireContext(), ChatRoomActivity::class.java)
+                intent.putExtra("room_id", roomId)
+                intent.putExtra("other_username", barang.getNama())
+                startActivity(intent)
 
             } catch (e: Exception) {
                 Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
