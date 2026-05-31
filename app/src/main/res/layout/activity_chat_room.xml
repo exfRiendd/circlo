@@ -31,6 +31,62 @@
             android:textColor="@color/circlo_black" />
     </RelativeLayout>
 
+    <LinearLayout
+        android:id="@+id/ll_action_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/circlo_light_gray"
+        android:padding="12dp"
+        android:visibility="gone">
+
+        <!-- Requester: minta barang -->
+        <Button
+            android:id="@+id/btn_minta_barang"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:text="📦 Minta Barang Ini"
+            android:textColor="@color/circlo_white"
+            android:textSize="13sp"
+            android:background="@drawable/bg_button_green"
+            android:stateListAnimator="@null"
+            android:visibility="gone" />
+
+        <!-- Donor: pilih penerima -->
+        <Button
+            android:id="@+id/btn_pilih_penerima"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:text="✅ Pilih Sebagai Penerima"
+            android:textColor="@color/circlo_white"
+            android:textSize="13sp"
+            android:background="@drawable/bg_button_green"
+            android:stateListAnimator="@null"
+            android:visibility="gone" />
+
+        <!-- Requester: konfirmasi terima -->
+        <Button
+            android:id="@+id/btn_konfirmasi_terima"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:text="🎉 Konfirmasi Sudah Diambil"
+            android:textColor="@color/circlo_white"
+            android:textSize="13sp"
+            android:background="@drawable/bg_button_black"
+            android:stateListAnimator="@null"
+            android:visibility="gone" />
+
+        <!-- Info status -->
+        <TextView
+            android:id="@+id/tv_status_donasi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="13sp"
+            android:textColor="@color/circlo_gray"
+            android:visibility="gone" />
+    </LinearLayout>
+
     <!-- Daftar Pesan -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_messages"
