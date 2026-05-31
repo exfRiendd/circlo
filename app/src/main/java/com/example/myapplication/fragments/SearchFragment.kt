@@ -18,6 +18,7 @@ import com.example.myapplication.adapters.BarangAdapter
 import com.example.myapplication.models.Barang
 import com.example.myapplication.models.BarangItem
 import com.example.myapplication.network.SupabaseClientProvider
+import com.example.myapplication.utils.DateHelper
 import io.github.jan.supabase.postgrest.postgrest
 import kotlinx.coroutines.launch
 
@@ -63,7 +64,7 @@ class SearchFragment : Fragment() {
 
                 allBarang.clear()
                 allBarang.addAll(result.map {
-                    val b = Barang(it.nama, it.kategori, it.lokasi, it.createdAt)
+                    val b = Barang(it.nama, it.kategori, it.lokasi, DateHelper.toRelative(it.createdAt))
                     b.setId(it.id)
                     b.setUserId(it.userId)
                     b

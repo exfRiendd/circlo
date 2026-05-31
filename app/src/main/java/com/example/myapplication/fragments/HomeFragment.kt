@@ -20,6 +20,7 @@ import com.example.myapplication.models.BarangItem
 import com.example.myapplication.models.ChatRoom
 import com.example.myapplication.network.SupabaseClientProvider
 import com.example.myapplication.profile.NotificationActivity
+import com.example.myapplication.utils.DateHelper
 import io.github.jan.supabase.auth.auth
 import io.github.jan.supabase.postgrest.postgrest
 import kotlinx.coroutines.launch
@@ -61,7 +62,7 @@ class HomeFragment : Fragment() {
                     .decodeList<BarangItem>()
 
                 val barangList = result.map {
-                    val b = Barang(it.nama, it.kategori, it.lokasi, it.createdAt)
+                    val b = Barang(it.nama, it.kategori, it.lokasi, DateHelper.toRelative(it.createdAt))
                     b.setId(it.id)
                     b.setUserId(it.userId)
                     b
