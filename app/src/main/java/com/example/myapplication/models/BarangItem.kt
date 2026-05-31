@@ -13,5 +13,6 @@ data class BarangItem(
     val lokasi: String = "",
     @SerialName("foto_url") val fotoUrl: String = "",
     val status: String = "aktif",
+    @SerialName("requester_id") val requesterId: String? = null,   // ← TAMBAH
     @SerialName("created_at") val createdAt: String = ""
 )
