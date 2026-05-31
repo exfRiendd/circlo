@@ -16,6 +16,7 @@ class MessageAdapter(
     companion object {
         private const val VIEW_SENT = 1
         private const val VIEW_RECEIVED = 2
+        private const val VIEW_SYSTEM = 3
     }
 
     inner class VH(view: View) : RecyclerView.ViewHolder(view) {
@@ -23,8 +24,11 @@ class MessageAdapter(
         val tvTime: TextView = view.findViewById(R.id.tv_message_time)
     }
 
-    override fun getItemViewType(position: Int) =
-        if (messages[position].senderId == myUserId) VIEW_SENT else VIEW_RECEIVED
+    override fun getItemViewType(position: Int) = when {
+        messages[position].senderId == "system" -> VIEW_SYSTEM
+        messages[position].senderId == myUserId -> VIEW_SENT
+        else -> VIEW_RECEIVED
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
         val layout = if (viewType == VIEW_SENT)
