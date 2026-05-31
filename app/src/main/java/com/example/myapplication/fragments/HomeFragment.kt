@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -60,6 +61,7 @@ class HomeFragment : Fragment() {
                     .postgrest["barang"]
                     .select()
                     .decodeList<BarangItem>()
+                    .filter { it.status == "aktif" }   // ← hanya barang aktif
 
                 val barangList = result.map {
                     val b = Barang(it.nama, it.kategori, it.lokasi, DateHelper.toRelative(it.createdAt))
@@ -67,6 +69,10 @@ class HomeFragment : Fragment() {
                     b.setUserId(it.userId)
                     b
                 }
+
+                // ← UPDATE jumlah barang
+                view?.findViewById<TextView>(R.id.tv_jumlah_barang)
+                    ?.text = "${barangList.size} barang"
 
                 rv.adapter = BarangAdapter(barangList) { barang ->
                     buatChatRoom(barang)
