@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
+    id("org.jetbrains.kotlin.plugin.serialization") version "2.1.0"
 }
 
 android {
@@ -33,7 +34,10 @@ android {
 }
 
 dependencies {
-    // Supabase BOM (versi sinkron)
+    // Serialization langsung
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")  // ← TAMBAH
+
+    // Supabase
     implementation(platform(libs.supabase.bom))
     implementation(libs.supabase.postgrest)
     implementation(libs.supabase.auth)
@@ -42,10 +46,11 @@ dependencies {
     implementation(libs.ktor.android)
     implementation(libs.ktor.cio)
 
-    // Coroutines (wajib untuk Supabase SDK)
+    // Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
 
-    // UI & Utils (tetap sama)
+    // UI
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
@@ -55,6 +60,11 @@ dependencies {
     implementation("de.hdodenhof:circleimageview:3.1.0")
     implementation("com.github.bumptech.glide:glide:4.16.0")
     implementation("com.google.android.material:material:1.12.0")
+
+    // Retrofit (untuk file Java lama)
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
