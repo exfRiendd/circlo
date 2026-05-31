@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="32dp"
+    android:background="@color/circlo_white">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Admin Panel"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="@color/circlo_black"
+        android:layout_marginBottom="32dp" />
+
+    <EditText
+        android:id="@+id/et_admin_email"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:hint="Email Admin"
+        android:inputType="textEmailAddress"
+        android:background="@drawable/bg_input_field"
+        android:paddingHorizontal="12dp"
+        android:textSize="14sp"
+        android:textColorHint="@color/circlo_gray" />
+
+    <EditText
+        android:id="@+id/et_admin_password"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_marginTop="16dp"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:background="@drawable/bg_input_field"
+        android:paddingHorizontal="12dp"
+        android:textSize="14sp"
+        android:textColorHint="@color/circlo_gray" />
+
+    <Button
+        android:id="@+id/btn_admin_login"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_marginTop="24dp"
+        android:text="Masuk sebagai Admin"
+        android:textColor="@color/circlo_white"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:background="@drawable/bg_button_black"
+        android:stateListAnimator="@null" />
+</LinearLayout>

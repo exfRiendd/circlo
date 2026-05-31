@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="2dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp">
+
+        <TextView
+            android:id="@+id/tv_nama"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="@color/circlo_black" />
+
+        <TextView
+            android:id="@+id/tv_kategori"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_nama"
+            android:layout_marginTop="4dp"
+            android:textSize="12sp"
+            android:textColor="@color/circlo_green" />
+
+        <TextView
+            android:id="@+id/tv_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_kategori"
+            android:layout_marginTop="2dp"
+            android:textSize="11sp"
+            android:textColor="@color/circlo_gray" />
+
+        <Button
+            android:id="@+id/btn_hapus_admin"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:text="Hapus"
+            android:textSize="12sp"
+            android:textColor="@color/circlo_white"
+            android:background="@drawable/bg_button_black"
+            android:paddingHorizontal="12dp"
+            android:stateListAnimator="@null" />
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

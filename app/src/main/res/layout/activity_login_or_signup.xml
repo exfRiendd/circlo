@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="32dp"
+    android:gravity="center"
+    android:background="@color/circlo_white">
+
+    <ImageView
+        android:id="@+id/iv_logo"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:src="@drawable/ic_circlo_logo"
+        android:contentDescription="Logo" />
+
+    <TextView
+        android:id="@+id/tv_app_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Circlo"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        android:textColor="@color/circlo_black" />
+
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_marginTop="32dp"
+        android:text="Log In"
+        android:textColor="@color/circlo_white"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:background="@drawable/bg_button_green"
+        android:stateListAnimator="@null" />
+
+    <Button
+        android:id="@+id/btn_signup"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_marginTop="12dp"
+        android:text="Sign Up"
+        android:textColor="@color/circlo_white"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:background="@drawable/bg_button_black"
+        android:stateListAnimator="@null" />
+
+    <TextView
+        android:id="@+id/tv_admin_link"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Masuk sebagai Admin"
+        android:textSize="12sp"
+        android:textColor="@color/circlo_gray" />
+
+</LinearLayout>

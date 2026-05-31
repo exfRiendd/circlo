@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/circlo_light_gray">
+
+    <!-- Header Admin -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/circlo_black"
+        android:padding="16dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="🛡️ Admin Dashboard"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/circlo_white" />
+    </RelativeLayout>
+
+    <!-- Kartu Statistik -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <!-- Total Barang -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/bg_card_white"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:elevation="2dp">
+            <TextView
+                android:id="@+id/tv_total_barang"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:textColor="@color/circlo_green" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Barang"
+                android:textSize="11sp"
+                android:textColor="@color/circlo_gray" />
+        </LinearLayout>
+
+        <!-- Total User -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/bg_card_white"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:elevation="2dp">
+            <TextView
+                android:id="@+id/tv_total_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:textColor="@color/circlo_green" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pengguna"
+                android:textSize="11sp"
+                android:textColor="@color/circlo_gray" />
+        </LinearLayout>
+
+        <!-- Total Donasi -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_card_white"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:elevation="2dp">
+            <TextView
+                android:id="@+id/tv_total_donasi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:textColor="@color/circlo_green" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Donasi"
+                android:textSize="11sp"
+                android:textColor="@color/circlo_gray" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Label -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="8dp"
+        android:text="Semua Barang"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:textColor="@color/circlo_black" />
+
+    <!-- RecyclerView Barang -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_admin_barang"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingHorizontal="16dp" />
+</LinearLayout>
