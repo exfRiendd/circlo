@@ -4,6 +4,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+// GANTI semua import fragment lama dengan ini:
 import com.example.myapplication.fragments.ChatFragment;
 import com.example.myapplication.fragments.HomeFragment;
 import com.example.myapplication.fragments.PostFragment;
