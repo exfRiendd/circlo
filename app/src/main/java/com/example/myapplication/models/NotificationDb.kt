@@ -9,6 +9,7 @@ data class NotificationDb(
     @SerialName("user_id") val userId: String = "",
     val judul: String = "",
     val konten: String = "",
+    val type: String = "info",                                      // ← TAMBAH
     @SerialName("sudah_dibaca") val sudahDibaca: Boolean = false,
     @SerialName("created_at") val createdAt: String = ""
 )
