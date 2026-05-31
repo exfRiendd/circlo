@@ -61,7 +61,7 @@ class HomeFragment : Fragment() {
                     .postgrest["barang"]
                     .select()
                     .decodeList<BarangItem>()
-                    .filter { it.status == "aktif" }   // ← hanya barang aktif
+                    .filter { it.status == "aktif" || it.status == "pending_pickup" }
 
                 val barangList = result.map {
                     val b = Barang(it.nama, it.kategori, it.lokasi, DateHelper.toRelative(it.createdAt))

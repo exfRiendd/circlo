@@ -60,7 +60,8 @@ class SearchFragment : Fragment() {
                     .postgrest["barang"]
                     .select()
                     .decodeList<BarangItem>()
-                    .filter { it.status == "aktif" }
+                    .filter { it.status == "aktif" || it.status == "pending_pickup" }
+
 
                 allBarang.clear()
                 allBarang.addAll(result.map {

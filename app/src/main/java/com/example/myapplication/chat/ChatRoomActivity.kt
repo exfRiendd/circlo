@@ -18,6 +18,7 @@ import com.example.myapplication.adapters.MessageAdapter
 import com.example.myapplication.models.BarangItem
 import com.example.myapplication.models.ChatRoom
 import com.example.myapplication.models.Message
+import com.example.myapplication.models.Profile
 import com.example.myapplication.network.SupabaseClientProvider
 import io.github.jan.supabase.auth.auth
 import io.github.jan.supabase.postgrest.postgrest
@@ -300,7 +301,7 @@ class ChatRoomActivity : AppCompatActivity() {
                 val donorProfile = SupabaseClientProvider.client
                     .postgrest["profiles"]
                     .select { filter { eq("id", r.donorId) } }
-                    .decodeSingle<com.example.myapplication.models.Profile>()
+                    .decodeSingle<Profile>()
 
                 SupabaseClientProvider.client.postgrest["profiles"]
                     .update({ set("total_donated", donorProfile.totalDonated + 1) }) {
@@ -311,14 +312,14 @@ class ChatRoomActivity : AppCompatActivity() {
                 val requesterProfile = SupabaseClientProvider.client
                     .postgrest["profiles"]
                     .select { filter { eq("id", userId) } }
-                    .decodeSingle<com.example.myapplication.models.Profile>()
+                    .decodeSingle<Profile>()
 
                 SupabaseClientProvider.client.postgrest["profiles"]
                     .update({ set("total_received", requesterProfile.totalReceived + 1) }) {
                         filter { eq("id", userId) }
                     }
 
-                // 4. Kirim pesan sistem ke chat
+                // 4. Kirim pesan sistem
                 sendSystemMessage("🎉 Barang berhasil diterima! Terima kasih sudah berkontribusi.")
 
                 // 5. Notifikasi ke donor
@@ -331,7 +332,12 @@ class ChatRoomActivity : AppCompatActivity() {
 
                 barang = b.copy(status = "diambil")
                 updateActionBar()
-                Toast.makeText(this@ChatRoomActivity, "Terima kasih sudah mengkonfirmasi!", Toast.LENGTH_SHORT).show()
+
+                Toast.makeText(
+                    this@ChatRoomActivity,
+                    "Terima kasih! Barang berhasil didonasikan 🎉",
+                    Toast.LENGTH_LONG
+                ).show()
 
             } catch (e: Exception) {
                 Toast.makeText(this@ChatRoomActivity, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
