@@ -49,4 +49,13 @@
         android:background="@drawable/bg_button_black"
         android:stateListAnimator="@null" />
 
+    <TextView
+        android:id="@+id/tv_admin_link"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Masuk sebagai Admin"
+        android:textSize="12sp"
+        android:textColor="@color/circlo_gray" />
+
 </LinearLayout>

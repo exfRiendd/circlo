@@ -3,11 +3,13 @@ package com.example.myapplication;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+
 import com.example.myapplication.fragments.ChatFragment;
 import com.example.myapplication.fragments.HomeFragment;
 import com.example.myapplication.fragments.PostFragment;
 import com.example.myapplication.fragments.ProfileFragment;
 import com.example.myapplication.fragments.SearchFragment;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -19,7 +21,6 @@ public class MainActivity extends AppCompatActivity {
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);
 
-        // Tampilkan HomeFragment sebagai default
         if (savedInstanceState == null) {
             loadFragment(new HomeFragment());
         }

@@ -10,9 +10,9 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="Circlo"
-        android:theme="@style/Theme.Circlo"
-        android:networkSecurityConfig="@xml/network_security_config">
+        android:theme="@style/Theme.Circlo">
 
+        <!-- Splash -->
         <activity android:name=".auth.SplashActivity" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,14 +20,26 @@
             </intent-filter>
         </activity>
 
+        <!-- Auth -->
         <activity android:name=".auth.LoginOrSignUpActivity" />
         <activity android:name=".auth.LoginActivity" />
         <activity android:name=".auth.SignUpActivity" />
+
+        <!-- Admin -->
+        <activity android:name=".auth.AdminLoginActivity" />
+        <activity android:name=".admin.AdminDashboardActivity" />
+
+        <!-- Main -->
         <activity android:name=".MainActivity" />
+
+        <!-- Profile -->
         <activity android:name=".profile.MyItemsActivity" />
         <activity android:name=".profile.SavedItemsActivity" />
         <activity android:name=".profile.AddressActivity" />
         <activity android:name=".profile.NotificationActivity" />
+
+        <!-- Chat -->
+        <activity android:name=".chat.ChatRoomActivity" />
 
     </application>
 </manifest>
