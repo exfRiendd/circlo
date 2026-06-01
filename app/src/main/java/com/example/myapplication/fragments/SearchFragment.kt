@@ -44,6 +44,15 @@ class SearchFragment : Fragment() {
 
         loadBarang()
 
+        val initialQuery = arguments?.getString("query")
+        if (!initialQuery.isNullOrEmpty()) {
+            val etSearch = view.findViewById<EditText>(R.id.et_search)
+            etSearch.setText(initialQuery)
+            etSearch.setSelection(initialQuery.length)
+        }
+
+        loadBarang()
+
         view.findViewById<EditText>(R.id.et_search).addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -62,7 +71,6 @@ class SearchFragment : Fragment() {
                     .decodeList<BarangItem>()
                     .filter { it.status == "aktif" || it.status == "pending_pickup" }
 
-
                 allBarang.clear()
                 allBarang.addAll(result.map {
                     val b = Barang(it.nama, it.kategori, it.lokasi, DateHelper.toRelative(it.createdAt))
@@ -71,8 +79,15 @@ class SearchFragment : Fragment() {
                     b
                 })
 
-                adapter.updateData(allBarang)
-                tvJumlahHasil.text = "${allBarang.size} barang"
+                // ← TAMBAH: auto-filter jika ada query dari HomeFragment
+                val initialQuery = arguments?.getString("query") ?: ""
+                if (initialQuery.isNotEmpty()) {
+                    filterBarang(initialQuery)
+                } else {
+                    adapter.updateData(allBarang)
+                    tvJumlahHasil.text = "${allBarang.size} barang"
+                }
+
             } catch (e: Exception) {
                 Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
             }

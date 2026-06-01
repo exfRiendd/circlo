@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -52,6 +53,34 @@ class HomeFragment : Fragment() {
         rvBarang.layoutManager = LinearLayoutManager(context)
 
         loadBarang(rvBarang)
+
+        val etSearch: EditText = view.findViewById(R.id.et_search)
+
+        etSearch.setOnEditorActionListener { _, actionId, event ->
+            val queryText = etSearch.text.toString().trim()
+
+            val isEnterPressed = event?.keyCode == android.view.KeyEvent.KEYCODE_ENTER
+                    && event.action == android.view.KeyEvent.ACTION_DOWN
+            val isSearchAction = actionId == android.view.inputmethod.EditorInfo.IME_ACTION_SEARCH
+                    || actionId == android.view.inputmethod.EditorInfo.IME_ACTION_DONE
+
+            if ((isSearchAction || isEnterPressed) && queryText.isNotEmpty()) {
+                val searchFragment = SearchFragment().apply {
+                    arguments = Bundle().also { it.putString("query", queryText) }
+                }
+                parentFragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, searchFragment)
+                    .commit()
+
+                activity?.findViewById<com.google.android.material.bottomnavigation.BottomNavigationView>(
+                    R.id.bottom_nav
+                )?.selectedItemId = R.id.nav_search
+
+                true
+            } else {
+                false
+            }
+        }
     }
 
     private fun loadBarang(rv: RecyclerView) {
