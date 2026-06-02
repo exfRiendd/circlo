@@ -92,11 +92,12 @@ class HomeFragment : Fragment() {
                     .decodeList<BarangItem>()
                     .filter { it.status == "aktif" || it.status == "pending_pickup" }
 
-                val barangList = result.map {
-                    val b = Barang(it.nama, it.kategori, it.lokasi, DateHelper.toRelative(it.createdAt))
-                    b.setId(it.id)
-                    b.setUserId(it.userId)
-                    b
+                val barangList = result.map { item ->
+                    Barang(item.nama, item.kategori, item.lokasi, DateHelper.toRelative(item.createdAt)).also { b ->
+                        b.setId(item.id)
+                        b.setUserId(item.userId)
+                        b.setFotoUrl(item.fotoUrl)
+                    }
                 }
 
                 // ← UPDATE jumlah barang

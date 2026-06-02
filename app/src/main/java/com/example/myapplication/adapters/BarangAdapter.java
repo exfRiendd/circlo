@@ -57,6 +57,7 @@ public class BarangAdapter extends RecyclerView.Adapter<BarangAdapter.ViewHolder
         holder.tvLokasi.setText(barang.getLokasi());
         holder.tvWaktu.setText(barang.getWaktu());
 
+        // ← Load foto dari URL
         if (barang.getFotoUrl() != null && !barang.getFotoUrl().isEmpty()) {
             Glide.with(holder.itemView.getContext())
                     .load(barang.getFotoUrl())
@@ -87,7 +88,7 @@ public class BarangAdapter extends RecyclerView.Adapter<BarangAdapter.ViewHolder
     static class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvNama, tvKategori, tvLokasi, tvWaktu;
         Button btnAmbil;
-        ImageView ivFoto;
+        ImageView ivFoto;   // ← tambah
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -96,7 +97,7 @@ public class BarangAdapter extends RecyclerView.Adapter<BarangAdapter.ViewHolder
             tvLokasi = itemView.findViewById(R.id.tv_lokasi);
             tvWaktu = itemView.findViewById(R.id.tv_waktu);
             btnAmbil = itemView.findViewById(R.id.btn_ambil);
-            ivFoto = itemView.findViewById(R.id.iv_foto);
+            ivFoto = itemView.findViewById(R.id.iv_foto);   // ← tambah
         }
     }
 }

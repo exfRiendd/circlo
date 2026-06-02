@@ -72,14 +72,14 @@ class SearchFragment : Fragment() {
                     .filter { it.status == "aktif" || it.status == "pending_pickup" }
 
                 allBarang.clear()
-                allBarang.addAll(result.map {
-                    val b = Barang(it.nama, it.kategori, it.lokasi, DateHelper.toRelative(it.createdAt))
-                    b.setId(it.id)
-                    b.setUserId(it.userId)
-                    b
+                allBarang.addAll(result.map { item ->
+                    Barang(item.nama, item.kategori, item.lokasi, DateHelper.toRelative(item.createdAt)).also { b ->
+                        b.setId(item.id)
+                        b.setUserId(item.userId)
+                        b.setFotoUrl(item.fotoUrl)
+                    }
                 })
 
-                // ← TAMBAH: auto-filter jika ada query dari HomeFragment
                 val initialQuery = arguments?.getString("query") ?: ""
                 if (initialQuery.isNotEmpty()) {
                     filterBarang(initialQuery)
