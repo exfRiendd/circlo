@@ -9,8 +9,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
 import com.example.myapplication.R;
 import com.example.myapplication.models.Barang;
 import java.util.List;
@@ -54,6 +57,17 @@ public class BarangAdapter extends RecyclerView.Adapter<BarangAdapter.ViewHolder
         holder.tvLokasi.setText(barang.getLokasi());
         holder.tvWaktu.setText(barang.getWaktu());
 
+        if (barang.getFotoUrl() != null && !barang.getFotoUrl().isEmpty()) {
+            Glide.with(holder.itemView.getContext())
+                    .load(barang.getFotoUrl())
+                    .placeholder(R.drawable.placeholder_item)
+                    .error(R.drawable.placeholder_item)
+                    .centerCrop()
+                    .into(holder.ivFoto);
+        } else {
+            holder.ivFoto.setImageResource(R.drawable.placeholder_item);
+        }
+
         holder.btnAmbil.setOnClickListener(v -> {
             if (listener != null) {
                 listener.onAmbilClick(barang);
@@ -73,6 +87,7 @@ public class BarangAdapter extends RecyclerView.Adapter<BarangAdapter.ViewHolder
     static class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvNama, tvKategori, tvLokasi, tvWaktu;
         Button btnAmbil;
+        ImageView ivFoto;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -81,6 +96,7 @@ public class BarangAdapter extends RecyclerView.Adapter<BarangAdapter.ViewHolder
             tvLokasi = itemView.findViewById(R.id.tv_lokasi);
             tvWaktu = itemView.findViewById(R.id.tv_waktu);
             btnAmbil = itemView.findViewById(R.id.btn_ambil);
+            ivFoto = itemView.findViewById(R.id.iv_foto);
         }
     }
 }

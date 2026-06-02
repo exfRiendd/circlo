@@ -27,6 +27,7 @@ public class Barang {
     public String getKategori()       { return kategori; }
     public String getLokasi()         { return lokasi; }
     public String getDeskripsi()      { return deskripsi; }
+    public void setFotoUrl(String fotoUrl) { this.fotoUrl = fotoUrl; }
     public String getFotoUrl()        { return fotoUrl; }
     public String getStatus()         { return status; }
     public String getWaktu()          { return createdAt; }
