@@ -29,6 +29,8 @@ import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
 
+    private lateinit var rvBarang: RecyclerView
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -49,13 +51,10 @@ class HomeFragment : Fragment() {
                 .commit()
         }
 
-        val rvBarang: RecyclerView = view.findViewById(R.id.rv_barang)
+        rvBarang = view.findViewById(R.id.rv_barang)
         rvBarang.layoutManager = LinearLayoutManager(context)
 
-        loadBarang(rvBarang)
-
         val etSearch: EditText = view.findViewById(R.id.et_search)
-
         etSearch.setOnEditorActionListener { _, actionId, event ->
             val queryText = etSearch.text.toString().trim()
 
@@ -81,18 +80,42 @@ class HomeFragment : Fragment() {
                 false
             }
         }
+
+        // Load data pertama kali
+        loadBarang()
     }
 
-    private fun loadBarang(rv: RecyclerView) {
+    // ← TAMBAHAN: refresh setiap kali fragment aktif lagi
+    override fun onResume() {
+        super.onResume()
+        if (::rvBarang.isInitialized) {
+            loadBarang()
+        }
+    }
+
+    private fun loadBarang() {
         lifecycleScope.launch {
             try {
                 val result = SupabaseClientProvider.client
                     .postgrest["barang"]
                     .select()
                     .decodeList<BarangItem>()
-                    .filter { it.status == "aktif" || it.status == "pending_pickup" }
 
-                val barangList = result.map { item ->
+                // ─── DEBUG LOG ───────────────────────────────────────────
+                android.util.Log.d("HomeFragment", "=== loadBarang() dipanggil ===")
+                android.util.Log.d("HomeFragment", "Total semua barang dari DB: ${result.size}")
+                result.forEach {
+                    android.util.Log.d("HomeFragment", "  • ${it.nama} | status='${it.status}' | id=${it.id}")
+                }
+                // ────────────────────────────────────────────────────────
+
+                val filtered = result.filter {
+                    it.status == "aktif" || it.status == "pending_pickup"
+                }
+
+                android.util.Log.d("HomeFragment", "Setelah filter: ${filtered.size} barang")
+
+                val barangList = filtered.map { item ->
                     Barang(item.nama, item.kategori, item.lokasi, DateHelper.toRelative(item.createdAt)).also { b ->
                         b.setId(item.id)
                         b.setUserId(item.userId)
@@ -100,15 +123,16 @@ class HomeFragment : Fragment() {
                     }
                 }
 
-                // ← UPDATE jumlah barang
+                // Update jumlah barang
                 view?.findViewById<TextView>(R.id.tv_jumlah_barang)
                     ?.text = "${barangList.size} barang"
 
-                rv.adapter = BarangAdapter(barangList) { barang ->
+                rvBarang.adapter = BarangAdapter(barangList) { barang ->
                     buatChatRoom(barang)
                 }
 
             } catch (e: Exception) {
+                android.util.Log.e("HomeFragment", "Error loadBarang: ${e.message}", e)
                 Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
             }
         }
@@ -125,7 +149,6 @@ class HomeFragment : Fragment() {
 
         lifecycleScope.launch {
             try {
-                // Cek apakah room sudah ada
                 val existing = SupabaseClientProvider.client
                     .postgrest["chat_rooms"]
                     .select()
@@ -137,7 +160,6 @@ class HomeFragment : Fragment() {
                 val roomId = if (existing != null) {
                     existing.id
                 } else {
-                    // Buat room baru
                     val newRoom = ChatRoom(
                         barangId = barang.getId() ?: "",
                         donorId = barang.getUserId() ?: "",
