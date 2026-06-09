@@ -6,7 +6,6 @@
     android:orientation="vertical"
     android:background="@color/circlo_white">
 
-    <!-- Header -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -58,16 +57,16 @@
             android:contentDescription="Notifikasi" />
     </RelativeLayout>
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- Search Bar -->
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="44dp"
@@ -97,7 +96,6 @@
                     android:singleLine="true" />
             </RelativeLayout>
 
-            <!-- Chip Kategori -->
             <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -160,7 +158,6 @@
                 </LinearLayout>
             </HorizontalScrollView>
 
-            <!-- Banner Bagikan Ambil Reuse -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -198,7 +195,6 @@
                     android:stateListAnimator="@null" />
             </LinearLayout>
 
-            <!-- Label Barang Tersedia -->
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -217,12 +213,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:text="6 barang"
+                    android:text="0 barang"
                     android:textSize="13sp"
                     android:textColor="@color/circlo_gray" />
             </RelativeLayout>
 
-            <!-- RecyclerView Barang -->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_barang"
                 android:layout_width="match_parent"
@@ -232,6 +227,6 @@
                 android:nestedScrollingEnabled="false" />
 
         </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 </LinearLayout>
