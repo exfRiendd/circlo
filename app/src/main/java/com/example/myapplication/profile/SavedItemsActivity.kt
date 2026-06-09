@@ -1,5 +1,6 @@
 package com.example.myapplication.profile
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.adapters.BarangAdapter
+import com.example.myapplication.chat.BarangDetailActivity
 import com.example.myapplication.models.Barang
 import com.example.myapplication.models.BarangItem
 import com.example.myapplication.models.SavedItem
@@ -59,7 +61,17 @@ class SavedItemsActivity : AppCompatActivity() {
                 }
 
                 tvJumlah.text = "${barangList.size} barang yang kamu simpan"
-                rvSaved.adapter = BarangAdapter(barangList)
+                rvSaved.adapter = BarangAdapter(
+                    barangList,
+                    BarangAdapter.OnItemClickListener { barang -> // ← Tambahkan deklarasi antarmuka eksplisit ini
+                        val intent = Intent(
+                            this@SavedItemsActivity,
+                            BarangDetailActivity::class.java
+                        )
+                        intent.putExtra("barang_id", barang.getId())
+                        startActivity(intent)
+                    }
+                )
             } catch (e: Exception) {
                 Toast.makeText(this@SavedItemsActivity, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
             }
