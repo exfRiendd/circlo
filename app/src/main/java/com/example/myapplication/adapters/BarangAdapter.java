@@ -82,7 +82,9 @@ public class BarangAdapter extends RecyclerView.Adapter<BarangAdapter.ViewHolder
 
     @Override
     public int getItemCount() {
-        return barangList.size();
+
+            return barangList != null ? barangList.size() : 0;
+
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
