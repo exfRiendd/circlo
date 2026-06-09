@@ -25,12 +25,14 @@ import com.example.myapplication.profile.NotificationActivity
 import com.example.myapplication.utils.DateHelper
 import io.github.jan.supabase.auth.auth
 import io.github.jan.supabase.postgrest.postgrest
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
 
     private lateinit var rvBarang: RecyclerView
+    private var allBarangList = mutableListOf<Barang>()
+    private var activeCategory = "Semua"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -56,6 +58,8 @@ class HomeFragment : Fragment() {
         rvBarang.layoutManager = LinearLayoutManager(context)
 
         val etSearch: EditText = view.findViewById(R.id.et_search)
+
+        // Logika saat pengguna menekan Enter / Ikon Cari di Keyboard
         etSearch.setOnEditorActionListener { _, actionId, event ->
             val queryText = etSearch.text.toString().trim()
 
@@ -66,14 +70,12 @@ class HomeFragment : Fragment() {
 
             if ((isSearchAction || isEnterPressed) && queryText.isNotEmpty()) {
 
-                // 1. PINDAHKAN TAB BAWAH DULU
-                // Ini akan memicu MainActivity meletakkan SearchFragment kosong
+                // 1. Pindahkan tab bawah ke Search
                 activity?.findViewById<com.google.android.material.bottomnavigation.BottomNavigationView>(
                     R.id.bottom_nav
                 )?.selectedItemId = R.id.nav_search
 
-                // 2. TIMPA DENGAN FRAGMENT KITA
-                // Letakkan SearchFragment yang sudah dibekali data query
+                // 2. Timpa fragment kosong dengan SearchFragment yang membawa query
                 val searchFragment = SearchFragment().apply {
                     arguments = Bundle().also { it.putString("query", queryText) }
                 }
@@ -87,11 +89,20 @@ class HomeFragment : Fragment() {
             }
         }
 
+        // Logika saat search bar sekadar diklik
+        etSearch.setOnClickListener {
+            activity?.findViewById<com.google.android.material.bottomnavigation.BottomNavigationView>(
+                R.id.bottom_nav
+            )?.selectedItemId = R.id.nav_search
+        }
+
+        // Setup filter kategori
+        setupCategoryChips(view)
+
         // Load data pertama kali
         loadBarang()
     }
 
-    // ← TAMBAHAN: refresh setiap kali fragment aktif lagi
     override fun onResume() {
         super.onResume()
         if (::rvBarang.isInitialized) {
@@ -102,19 +113,16 @@ class HomeFragment : Fragment() {
     private fun loadBarang() {
         lifecycleScope.launch {
             try {
-                // 1. Ambil data menggunakan BarangItem (Model Kotlin yang sudah ada Serializer-nya)
                 val result = SupabaseClientProvider.client
                     .postgrest["barang"]
                     .select()
-                    .decodeList<BarangItem>().filter { it.status == "aktif" || it.status == "pending_pickup" }
+                    .decodeList<BarangItem>()
 
-                // ─── DEBUG LOG (Untuk memantau data di Logcat) ───────────────────
-                android.util.Log.d("HomeFragment", "=== loadBarang() dipanggil ===")
-                android.util.Log.d("HomeFragment", "Total barang aktif dari DB: ${result.size}")
-                // ─────────────────────────────────────────────────────────────────
+                val filtered = result.filter {
+                    it.status == "aktif" || it.status == "pending_pickup"
+                }
 
-                // 2. Map dari BarangItem (Kotlin) ke Barang (Java) seperti di SearchFragment
-                val barangList = result.map { item ->
+                val barangList = filtered.map { item ->
                     Barang(item.nama, item.kategori, item.lokasi, DateHelper.toRelative(item.createdAt)).also { b ->
                         b.setId(item.id)
                         b.setUserId(item.userId)
@@ -122,36 +130,78 @@ class HomeFragment : Fragment() {
                     }
                 }
 
-                // 3. Update jumlah barang di UI Beranda
-                view?.findViewById<TextView>(R.id.tv_jumlah_barang)
-                    ?.text = "${barangList.size} barang"
+                // Simpan ke list global dan panggil fungsi filter
+                allBarangList.clear()
+                allBarangList.addAll(barangList)
+                filterData()
 
-                rvBarang.adapter = BarangAdapter(
-                    barangList,
-                    { barang ->
-                        // Klik card → buka halaman detail
-                        val intent = Intent(requireContext(),
-                            com.example.myapplication.chat.BarangDetailActivity::class.java)
-                        intent.putExtra("barang_id", barang.getId())
-                        startActivity(intent)
-                    },
-                    { barang ->
-                        // Klik tombol "Ambil" → langsung ke chat (perilaku lama)
-                        buatChatRoom(barang)
-                    }
-                )
-
-            } catch (e: Exception) {
-                android.util.Log.e("HomeFragment", "Error loadBarang: ${e.message}", e)
-                Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
             } catch (e: CancellationException) {
-                // Sinyal wajar dari Android bahwa Fragment ditutup. Abaikan saja.
+                // Abaikan error coroutine saat berpindah tab
                 throw e
             } catch (e: Exception) {
-                // Error jaringan/database sungguhan baru ditampilkan
-                Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+                // Cegah crash dengan memastikan context tidak null
+                context?.let { safeContext ->
+                    Toast.makeText(safeContext, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
             }
         }
+    }
+
+    private fun setupCategoryChips(view: View) {
+        val chips = mapOf(
+            "Semua" to view.findViewById<TextView>(R.id.chip_semua),
+            "Furniture" to view.findViewById<TextView>(R.id.chip_furniture),
+            "Elektronik" to view.findViewById<TextView>(R.id.chip_elektronik),
+            "Pakaian" to view.findViewById<TextView>(R.id.chip_pakaian),
+            "Mainan" to view.findViewById<TextView>(R.id.chip_mainan),
+            "Buku" to view.findViewById<TextView>(R.id.chip_buku),
+            "Lainnya" to view.findViewById<TextView>(R.id.chip_lainnya)
+        )
+
+        chips.forEach { (kategori, textView) ->
+            textView?.setOnClickListener {
+                // 1. Reset warna semua chip jadi unselected
+                chips.values.forEach { chip ->
+                    chip?.setBackgroundResource(R.drawable.bg_chip_unselected)
+                    chip?.setTextColor(resources.getColor(R.color.circlo_black, null))
+                }
+
+                // 2. Ubah warna chip yang sedang diklik jadi hijau
+                textView.setBackgroundResource(R.drawable.bg_chip_selected)
+                textView.setTextColor(resources.getColor(R.color.circlo_white, null))
+
+                // 3. Set kategori aktif dan saring datanya
+                activeCategory = kategori
+                filterData()
+            }
+        }
+    }
+
+    private fun filterData() {
+        // Saring data berdasarkan kategori yang dipilih
+        val filteredList = if (activeCategory == "Semua") {
+            allBarangList
+        } else {
+            allBarangList.filter { it.kategori.equals(activeCategory, ignoreCase = true) }
+        }
+
+        // Update teks jumlah barang
+        view?.findViewById<TextView>(R.id.tv_jumlah_barang)?.text = "${filteredList.size} barang"
+
+        // Set adapter dengan list yang sudah difilter
+        rvBarang.adapter = BarangAdapter(
+            filteredList,
+            BarangAdapter.OnItemClickListener { barang ->
+                // Klik card -> ke halaman detail
+                val intent = Intent(requireContext(), com.example.myapplication.chat.BarangDetailActivity::class.java)
+                intent.putExtra("barang_id", barang.getId())
+                startActivity(intent)
+            },
+            BarangAdapter.OnAmbilClickListener { barang ->
+                // Klik tombol Ambil -> buat chat room
+                buatChatRoom(barang)
+            }
+        )
     }
 
     private fun buatChatRoom(barang: Barang) {
@@ -193,8 +243,13 @@ class HomeFragment : Fragment() {
                 intent.putExtra("other_username", barang.getNama())
                 startActivity(intent)
 
+            } catch (e: CancellationException) {
+                // Abaikan pembatalan
+                throw e
             } catch (e: Exception) {
-                Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+                context?.let { safeContext ->
+                    Toast.makeText(safeContext, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }

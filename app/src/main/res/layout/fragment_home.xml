@@ -155,6 +155,42 @@
                         android:gravity="center"
                         android:paddingHorizontal="16dp" />
 
+                    <TextView
+                        android:id="@+id/chip_mainan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="32dp"
+                        android:layout_marginStart="8dp"
+                        android:text="Mainan"
+                        android:textSize="13sp"
+                        android:textColor="@color/circlo_black"
+                        android:background="@drawable/bg_chip_unselected"
+                        android:gravity="center"
+                        android:paddingHorizontal="16dp" />
+
+                    <TextView
+                        android:id="@+id/chip_buku"
+                        android:layout_width="wrap_content"
+                        android:layout_height="32dp"
+                        android:layout_marginStart="8dp"
+                        android:text="Buku"
+                        android:textSize="13sp"
+                        android:textColor="@color/circlo_black"
+                        android:background="@drawable/bg_chip_unselected"
+                        android:gravity="center"
+                        android:paddingHorizontal="16dp" />
+
+                    <TextView
+                        android:id="@+id/chip_lainnya"
+                        android:layout_width="wrap_content"
+                        android:layout_height="32dp"
+                        android:layout_marginStart="8dp"
+                        android:text="Lainnya"
+                        android:textSize="13sp"
+                        android:textColor="@color/circlo_black"
+                        android:background="@drawable/bg_chip_unselected"
+                        android:gravity="center"
+                        android:paddingHorizontal="16dp" />
+
                 </LinearLayout>
             </HorizontalScrollView>
 
