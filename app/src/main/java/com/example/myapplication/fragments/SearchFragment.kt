@@ -22,6 +22,7 @@ import com.example.myapplication.network.SupabaseClientProvider
 import com.example.myapplication.utils.DateHelper
 import io.github.jan.supabase.postgrest.postgrest
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.CancellationException
 
 class SearchFragment : Fragment() {
 
@@ -99,8 +100,14 @@ class SearchFragment : Fragment() {
                     tvJumlahHasil.text = "${allBarang.size} barang"
                 }
 
+            } catch (e: CancellationException) {
+                // 1. Abaikan pembatalan coroutine saat Fragment ditutup
+                throw e
             } catch (e: Exception) {
-                Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+                // 2. Gunakan context?.let agar aman dari NullPointerException
+                context?.let { safeContext ->
+                    Toast.makeText(safeContext, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }

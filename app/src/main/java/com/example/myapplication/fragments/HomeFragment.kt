@@ -26,6 +26,7 @@ import com.example.myapplication.utils.DateHelper
 import io.github.jan.supabase.auth.auth
 import io.github.jan.supabase.postgrest.postgrest
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.CancellationException
 
 class HomeFragment : Fragment() {
 
@@ -64,16 +65,21 @@ class HomeFragment : Fragment() {
                     || actionId == android.view.inputmethod.EditorInfo.IME_ACTION_DONE
 
             if ((isSearchAction || isEnterPressed) && queryText.isNotEmpty()) {
+
+                // 1. PINDAHKAN TAB BAWAH DULU
+                // Ini akan memicu MainActivity meletakkan SearchFragment kosong
+                activity?.findViewById<com.google.android.material.bottomnavigation.BottomNavigationView>(
+                    R.id.bottom_nav
+                )?.selectedItemId = R.id.nav_search
+
+                // 2. TIMPA DENGAN FRAGMENT KITA
+                // Letakkan SearchFragment yang sudah dibekali data query
                 val searchFragment = SearchFragment().apply {
                     arguments = Bundle().also { it.putString("query", queryText) }
                 }
                 parentFragmentManager.beginTransaction()
                     .replace(R.id.fragment_container, searchFragment)
                     .commit()
-
-                activity?.findViewById<com.google.android.material.bottomnavigation.BottomNavigationView>(
-                    R.id.bottom_nav
-                )?.selectedItemId = R.id.nav_search
 
                 true
             } else {
@@ -137,6 +143,12 @@ class HomeFragment : Fragment() {
 
             } catch (e: Exception) {
                 android.util.Log.e("HomeFragment", "Error loadBarang: ${e.message}", e)
+                Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+            } catch (e: CancellationException) {
+                // Sinyal wajar dari Android bahwa Fragment ditutup. Abaikan saja.
+                throw e
+            } catch (e: Exception) {
+                // Error jaringan/database sungguhan baru ditampilkan
                 Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
             }
         }
