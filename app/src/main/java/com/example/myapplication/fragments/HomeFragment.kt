@@ -127,9 +127,20 @@ class HomeFragment : Fragment() {
                 view?.findViewById<TextView>(R.id.tv_jumlah_barang)
                     ?.text = "${barangList.size} barang"
 
-                rvBarang.adapter = BarangAdapter(barangList) { barang ->
-                    buatChatRoom(barang)
-                }
+                rvBarang.adapter = BarangAdapter(
+                    barangList,
+                    { barang ->
+                        // Klik card → buka halaman detail
+                        val intent = Intent(requireContext(),
+                            com.example.myapplication.chat.BarangDetailActivity::class.java)
+                        intent.putExtra("barang_id", barang.getId())
+                        startActivity(intent)
+                    },
+                    { barang ->
+                        // Klik tombol "Ambil" → langsung ke chat (perilaku lama)
+                        buatChatRoom(barang)
+                    }
+                )
 
             } catch (e: Exception) {
                 android.util.Log.e("HomeFragment", "Error loadBarang: ${e.message}", e)

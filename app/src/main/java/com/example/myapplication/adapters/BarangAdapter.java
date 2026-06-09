@@ -1,8 +1,5 @@
 package com.example.myapplication.adapters;
 
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,16 +21,32 @@ public class BarangAdapter extends RecyclerView.Adapter<BarangAdapter.ViewHolder
         void onAmbilClick(Barang barang);
     }
 
+    public interface OnItemClickListener {
+        void onItemClick(Barang barang);
+    }
+
     private List<Barang> barangList;
     private OnAmbilClickListener listener;
+    private OnItemClickListener itemClickListener;
 
+    // 1. Konstruktor bawaan (Hanya List)
     public BarangAdapter(List<Barang> barangList) {
         this.barangList = barangList;
     }
 
-    public BarangAdapter(List<Barang> barangList, OnAmbilClickListener listener) {
+    // 2. Konstruktor untuk SearchFragment & SavedItemsActivity (List + Klik Card)
+    public BarangAdapter(List<Barang> barangList, OnItemClickListener itemClickListener) {
         this.barangList = barangList;
-        this.listener = listener;
+        this.itemClickListener = itemClickListener;
+    }
+
+    // 3. Konstruktor untuk HomeFragment (List + Klik Card + Klik Tombol Ambil)
+    public BarangAdapter(List<Barang> barangList,
+                         OnItemClickListener itemClickListener,
+                         OnAmbilClickListener ambilClickListener) {
+        this.barangList = barangList;
+        this.itemClickListener = itemClickListener;
+        this.listener = ambilClickListener;
     }
 
     public void updateData(List<Barang> newList) {
@@ -57,7 +70,7 @@ public class BarangAdapter extends RecyclerView.Adapter<BarangAdapter.ViewHolder
         holder.tvLokasi.setText(barang.getLokasi());
         holder.tvWaktu.setText(barang.getWaktu());
 
-        // ← Load foto dari URL
+        // Load foto dari URL
         if (barang.getFotoUrl() != null && !barang.getFotoUrl().isEmpty()) {
             Glide.with(holder.itemView.getContext())
                     .load(barang.getFotoUrl())
@@ -69,6 +82,14 @@ public class BarangAdapter extends RecyclerView.Adapter<BarangAdapter.ViewHolder
             holder.ivFoto.setImageResource(R.drawable.placeholder_item);
         }
 
+        // Action klik seluruh card (buka detail)
+        holder.itemView.setOnClickListener(v -> {
+            if (itemClickListener != null) {
+                itemClickListener.onItemClick(barang);
+            }
+        });
+
+        // Action klik tombol ambil
         holder.btnAmbil.setOnClickListener(v -> {
             if (listener != null) {
                 listener.onAmbilClick(barang);
@@ -88,7 +109,7 @@ public class BarangAdapter extends RecyclerView.Adapter<BarangAdapter.ViewHolder
     static class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvNama, tvKategori, tvLokasi, tvWaktu;
         Button btnAmbil;
-        ImageView ivFoto;   // ← tambah
+        ImageView ivFoto;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -97,7 +118,7 @@ public class BarangAdapter extends RecyclerView.Adapter<BarangAdapter.ViewHolder
             tvLokasi = itemView.findViewById(R.id.tv_lokasi);
             tvWaktu = itemView.findViewById(R.id.tv_waktu);
             btnAmbil = itemView.findViewById(R.id.btn_ambil);
-            ivFoto = itemView.findViewById(R.id.iv_foto);   // ← tambah
+            ivFoto = itemView.findViewById(R.id.iv_foto);
         }
     }
 }

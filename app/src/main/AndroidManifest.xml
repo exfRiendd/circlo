@@ -41,6 +41,7 @@
 
         <!-- Chat -->
         <activity android:name=".chat.ChatRoomActivity" />
+        <activity android:name=".chat.BarangDetailActivity" />
 
         <!-- Tambah FileProvider untuk kamera -->
         <provider

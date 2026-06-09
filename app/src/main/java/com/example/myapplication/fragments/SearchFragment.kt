@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import android.content.Intent
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -39,7 +40,17 @@ class SearchFragment : Fragment() {
         tvJumlahHasil = view.findViewById(R.id.tv_jumlah_hasil)
         val rvHasil: RecyclerView = view.findViewById(R.id.rv_hasil)
         rvHasil.layoutManager = LinearLayoutManager(context)
-        adapter = BarangAdapter(mutableListOf())
+
+        adapter = BarangAdapter(
+            mutableListOf<Barang>(),
+            BarangAdapter.OnItemClickListener { barang -> // ← Tambahkan deklarasi antarmuka eksplisit ini
+                val intent = Intent(requireContext(),
+                    com.example.myapplication.chat.BarangDetailActivity::class.java)
+                intent.putExtra("barang_id", barang.getId())
+                startActivity(intent)
+            }
+        )
+
         rvHasil.adapter = adapter
 
         loadBarang()
