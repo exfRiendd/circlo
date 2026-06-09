@@ -26,20 +26,13 @@
                 android:textStyle="bold"
                 android:textColor="@color/circlo_white" />
 
-            <ImageView
-                android:id="@+id/iv_settings"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_alignParentEnd="true"
-                android:src="@drawable/ic_settings"
-                android:contentDescription="Pengaturan" />
+
 
             <!-- Info User -->
             <LinearLayout
                 android:id="@+id/ll_user_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/iv_settings"
                 android:layout_marginTop="16dp"
                 android:orientation="horizontal"
                 android:gravity="center_vertical">
@@ -103,12 +96,6 @@
                 </LinearLayout>
 
                 <!-- Tombol Edit Profil -->
-                <ImageView
-                    android:id="@+id/iv_edit_profil"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/ic_edit"
-                    android:contentDescription="Edit Profil" />
 
             </LinearLayout>
 
