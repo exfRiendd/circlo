@@ -96,26 +96,19 @@ class HomeFragment : Fragment() {
     private fun loadBarang() {
         lifecycleScope.launch {
             try {
+                // 1. Ambil data menggunakan BarangItem (Model Kotlin yang sudah ada Serializer-nya)
                 val result = SupabaseClientProvider.client
                     .postgrest["barang"]
                     .select()
-                    .decodeList<BarangItem>()
+                    .decodeList<BarangItem>().filter { it.status == "aktif" || it.status == "pending_pickup" }
 
-                // ─── DEBUG LOG ───────────────────────────────────────────
+                // ─── DEBUG LOG (Untuk memantau data di Logcat) ───────────────────
                 android.util.Log.d("HomeFragment", "=== loadBarang() dipanggil ===")
-                android.util.Log.d("HomeFragment", "Total semua barang dari DB: ${result.size}")
-                result.forEach {
-                    android.util.Log.d("HomeFragment", "  • ${it.nama} | status='${it.status}' | id=${it.id}")
-                }
-                // ────────────────────────────────────────────────────────
+                android.util.Log.d("HomeFragment", "Total barang aktif dari DB: ${result.size}")
+                // ─────────────────────────────────────────────────────────────────
 
-                val filtered = result.filter {
-                    it.status == "aktif" || it.status == "pending_pickup"
-                }
-
-                android.util.Log.d("HomeFragment", "Setelah filter: ${filtered.size} barang")
-
-                val barangList = filtered.map { item ->
+                // 2. Map dari BarangItem (Kotlin) ke Barang (Java) seperti di SearchFragment
+                val barangList = result.map { item ->
                     Barang(item.nama, item.kategori, item.lokasi, DateHelper.toRelative(item.createdAt)).also { b ->
                         b.setId(item.id)
                         b.setUserId(item.userId)
@@ -123,7 +116,7 @@ class HomeFragment : Fragment() {
                     }
                 }
 
-                // Update jumlah barang
+                // 3. Update jumlah barang di UI Beranda
                 view?.findViewById<TextView>(R.id.tv_jumlah_barang)
                     ?.text = "${barangList.size} barang"
 
