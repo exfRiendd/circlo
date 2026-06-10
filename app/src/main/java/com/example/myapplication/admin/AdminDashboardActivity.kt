@@ -14,6 +14,8 @@ import com.example.myapplication.network.SupabaseClientProvider
 import io.github.jan.supabase.postgrest.postgrest
 import io.github.jan.supabase.storage.storage
 import kotlinx.coroutines.launch
+import android.content.Intent
+import com.example.myapplication.chat.BarangDetailActivity
 
 class AdminDashboardActivity : AppCompatActivity() {
 
@@ -46,13 +48,20 @@ class AdminDashboardActivity : AppCompatActivity() {
                 tvTotalDonasi.text = totalDonasi.toString()
 
                 rvBarang.adapter = AdminBarangAdapter(
-                    allBarang.toMutableList()
-                ) { barangId ->
-                    val barangYangDihapus = allBarang.find { it.id == barangId }
-                    val urlFoto = barangYangDihapus?.fotoUrl ?: ""
-
-                    deleteBarang(barangId, urlFoto)
-                }
+                    list = allBarang.toMutableList(),
+                    onDelete = { barangId ->
+                        // Fungsi Hapus yang sudah kamu perbaiki sebelumnya
+                        val barangYangDihapus = allBarang.find { it.id == barangId }
+                        val urlFoto = barangYangDihapus?.fotoUrl ?: ""
+                        deleteBarang(barangId, urlFoto)
+                    },
+                    onItemClick = { barangId ->
+                        // Membuka halaman detail barang yang sudah ada
+                        val intent = Intent(this@AdminDashboardActivity, BarangDetailActivity::class.java)
+                        intent.putExtra("barang_id", barangId)
+                        startActivity(intent)
+                    }
+                )
 
             } catch (e: Exception) {
                 Toast.makeText(this@AdminDashboardActivity,

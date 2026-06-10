@@ -11,7 +11,8 @@ import com.example.myapplication.models.BarangItem
 
 class AdminBarangAdapter(
     private val list: MutableList<BarangItem>,
-    private val onDelete: (String) -> Unit
+    private val onDelete: (String) -> Unit,
+    private val onItemClick: (String) -> Unit // ← TAMBAH PARAMETER INI
 ) : RecyclerView.Adapter<AdminBarangAdapter.VH>() {
 
     inner class VH(view: View) : RecyclerView.ViewHolder(view) {
@@ -29,7 +30,12 @@ class AdminBarangAdapter(
         holder.tvNama.text = item.nama
         holder.tvKategori.text = item.kategori
         holder.tvStatus.text = item.status
+
+        // Aksi ketika tombol Hapus diklik
         holder.btnHapus.setOnClickListener { onDelete(item.id) }
+
+        // ← TAMBAH INI: Aksi ketika area kartu diklik
+        holder.itemView.setOnClickListener { onItemClick(item.id) }
     }
 
     override fun getItemCount() = list.size
