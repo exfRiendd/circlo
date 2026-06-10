@@ -12,6 +12,7 @@ import com.example.myapplication.models.BarangItem
 import com.example.myapplication.models.Profile
 import com.example.myapplication.network.SupabaseClientProvider
 import io.github.jan.supabase.postgrest.postgrest
+import io.github.jan.supabase.storage.storage
 import kotlinx.coroutines.launch
 
 class AdminDashboardActivity : AppCompatActivity() {
@@ -46,7 +47,12 @@ class AdminDashboardActivity : AppCompatActivity() {
 
                 rvBarang.adapter = AdminBarangAdapter(
                     allBarang.toMutableList()
-                ) { barangId -> deleteBarang(barangId) }
+                ) { barangId ->
+                    val barangYangDihapus = allBarang.find { it.id == barangId }
+                    val urlFoto = barangYangDihapus?.fotoUrl ?: ""
+
+                    deleteBarang(barangId, urlFoto)
+                }
 
             } catch (e: Exception) {
                 Toast.makeText(this@AdminDashboardActivity,
@@ -55,19 +61,27 @@ class AdminDashboardActivity : AppCompatActivity() {
         }
     }
 
-    private fun deleteBarang(barangId: String) {
+    private fun deleteBarang(barangId: String, fotoUrl: String) {
         lifecycleScope.launch {
             try {
+                // 1. Hapus fotonya dulu dari Storage (jika ada)
+                if (fotoUrl.isNotEmpty()) {
+                    val bucket = "barang-foto"
+                    // Ekstrak nama file dari URL (contoh: "userId/uuid.jpg")
+                    val fileName = fotoUrl.substringAfterLast("$bucket/")
+                    SupabaseClientProvider.client.storage[bucket].delete(fileName)
+                }
+
+                // 2. Hapus baris datanya dari Database
                 SupabaseClientProvider.client.postgrest["barang"]
                     .delete {
                         filter { eq("id", barangId) }
                     }
-                Toast.makeText(this@AdminDashboardActivity,
-                    "Barang dihapus", Toast.LENGTH_SHORT).show()
+
+                Toast.makeText(this@AdminDashboardActivity, "Barang dan foto dihapus", Toast.LENGTH_SHORT).show()
                 recreate()
             } catch (e: Exception) {
-                Toast.makeText(this@AdminDashboardActivity,
-                    "Gagal: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@AdminDashboardActivity, "Gagal: ${e.message}", Toast.LENGTH_SHORT).show()
             }
         }
     }

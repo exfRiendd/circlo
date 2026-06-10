@@ -38,7 +38,10 @@
         android:orientation="vertical"
         android:background="@color/circlo_light_gray"
         android:padding="12dp"
-        android:visibility="gone">
+        android:visibility="gone"
+        android:layout_marginBottom="24dp"
+        >
+
 
         <!-- Requester: minta barang -->
         <Button
